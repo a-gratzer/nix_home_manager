@@ -9,26 +9,11 @@ in
   # paths it should manage.
   home.username = "ag";
   home.homeDirectory = "/home/ag";
-
-  # This value determines the Home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new Home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update Home Manager without changing this value. See
-  # the Home Manager release notes for a list of state version
-  # changes in each release.
   home.stateVersion = "22.05";
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
 
   # nixpkgs.overlays = [
   #   (import ./overlays.nix)
   # ];
-
-  programs.git = (pkgs.callPackage ./apps/git.nix {}).programs.git;
-
 
   home.packages = with pkgs; [
     # ######################
@@ -54,11 +39,17 @@ in
       docker-compose
     # ######################
     # GUI
-      google-chrome
-      slack
-      sublime4
+      # BROWSER
+        google-chrome
+      # CHAT
+        slack
+        discord
+      # EDITORS
+        sublime4
   ];
 
+  programs.home-manager.enable = true;
+  programs.git = (pkgs.callPackage ./apps/git.nix {}).programs.git;
 
   news.display = "silent";
 
