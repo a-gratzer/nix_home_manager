@@ -26,6 +26,7 @@ in
       tree
       tldr
       bat
+      exa
     # ######################
     # GIT
       git
@@ -35,6 +36,7 @@ in
       maven
       tmux
      	tmuxinator
+      #byobu
     # ######################
     # 	Virtualization
       podman
@@ -50,9 +52,14 @@ in
         sublime4
   ];
 
+
   programs.home-manager.enable = true;
   programs.git = (pkgs.callPackage ./apps/git.nix {}).programs.git;
-  programs.tmux = (pkgs.callPackage ./apps/tmux/default.nix {}).programs.tmux;
+  programs.tmux = (pkgs.callPackage ./apps/tmux.nix {}).programs.tmux;
+  #programs.zsh = (pkgs.callPackage ./apps/zsh.nix {}).programs.zsh;
+  
+  home.file.".tmuxinator.yml".source = ./templates/tmuxinator.yml;
+  home.file.".aliases".source = ./templates/.aliases;
 
   news.display = "silent";
 
