@@ -32,10 +32,12 @@ in
       meld
     # ######################
     # DEV
+      maven
       tmux
      	tmuxinator
     # ######################
     # 	Virtualization
+      podman
       docker-compose
     # ######################
     # GUI
@@ -50,6 +52,7 @@ in
 
   programs.home-manager.enable = true;
   programs.git = (pkgs.callPackage ./apps/git.nix {}).programs.git;
+  programs.tmux = (pkgs.callPackage ./apps/tmux/default.nix {}).programs.tmux;
 
   news.display = "silent";
 
