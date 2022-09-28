@@ -34,7 +34,6 @@ in
     # ######################
     # DEV
       maven
-      tmux
      	tmuxinator
       #byobu
     # ######################
@@ -56,6 +55,7 @@ in
   programs.home-manager.enable = true;
   programs.git = (pkgs.callPackage ./apps/git.nix {}).programs.git;
   programs.tmux = (pkgs.callPackage ./apps/tmux.nix {}).programs.tmux;
+  programs.direnv = (pkgs.callPackage ./apps/direnv.nix {}).programs.direnv;
   #programs.zsh = (pkgs.callPackage ./apps/zsh.nix {}).programs.zsh;
   
   home.file.".tmuxinator.yml".source = ./templates/tmuxinator.yml;
