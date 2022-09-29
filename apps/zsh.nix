@@ -9,6 +9,7 @@
 
     # turn off this - WARNING: terminal is not fully functional
     initExtra = ''
+
       export TERM=xterm
       if [ -f ~/.aliases ]; then
           . ~/.aliases
@@ -19,10 +20,7 @@
     '';
 
     shellAliases = {
-      mci = "mvn clean install -DskipTests";
-      mcit = "mvn clean install";
-      mcp = "mvn clean package -DskipTests";
-      mcpt = "mvn clean package";
+
     };
 
     # .zshrc will get updated to source this plugin automatically

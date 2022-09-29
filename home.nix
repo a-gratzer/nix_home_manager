@@ -59,7 +59,7 @@ in
   programs.direnv = (pkgs.callPackage ./apps/direnv.nix {}).programs.direnv;
   programs.zsh = (pkgs.callPackage ./apps/zsh.nix {}).programs.zsh;
   
-  home.file.".tmuxinator.yml".source = ./templates/tmuxinator.yml;
+  home.file.".tmuxinator.yml".source = ./templates/tmuxinator/default.yml;
   home.file.".aliases".source = ./templates/.aliases;
 
   news.display = "silent";
