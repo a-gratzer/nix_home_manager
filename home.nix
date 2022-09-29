@@ -27,28 +27,29 @@ in
       tldr
       bat
       exa
+      zsh-history
     # ######################
     # GIT
-      git
-      meld
+#      git
+#      meld
     # ######################
     # DEV
-      maven
+#      maven
      	tmuxinator
       #byobu
     # ######################
     # 	Virtualization
-      podman
-      docker-compose
+#      podman
+#      docker-compose
     # ######################
     # GUI
       # BROWSER
-        google-chrome
+#        google-chrome
       # CHAT
-        slack
-        discord
+#        slack
+#        discord
       # EDITORS
-        sublime4
+#        sublime4
   ];
 
 
@@ -56,7 +57,7 @@ in
   programs.git = (pkgs.callPackage ./apps/git.nix {}).programs.git;
   programs.tmux = (pkgs.callPackage ./apps/tmux.nix {}).programs.tmux;
   programs.direnv = (pkgs.callPackage ./apps/direnv.nix {}).programs.direnv;
-  #programs.zsh = (pkgs.callPackage ./apps/zsh.nix {}).programs.zsh;
+  programs.zsh = (pkgs.callPackage ./apps/zsh.nix {}).programs.zsh;
   
   home.file.".tmuxinator.yml".source = ./templates/tmuxinator.yml;
   home.file.".aliases".source = ./templates/.aliases;
