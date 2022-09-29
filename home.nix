@@ -44,14 +44,19 @@ in
     # ######################
     # GUI
       # BROWSER
-#        google-chrome
+        google-chrome
+        brave
       # CHAT
 #        slack
 #        discord
       # EDITORS
-#        sublime4
+        sublime4
+      # DB
+        robo3t
+      # REST
+        postman
+        insomnia
   ];
-
 
   programs.home-manager.enable = true;
   programs.git = (pkgs.callPackage ./apps/git.nix {}).programs.git;
