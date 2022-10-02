@@ -24,6 +24,8 @@ end
 
 opt("w", "number", true)
 opt("w", "relativenumber", true)
+opt("b", "shiftwidth", 4)
+
 opt("o", "ignorecase", true)
 
 opt("o", "numberwidth", 2)
