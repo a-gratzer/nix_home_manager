@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
 let
   config = import ./config.nix;
@@ -30,17 +30,22 @@ in
       zsh-history
     # ######################
     # GIT
-#      git
-#      meld
+      git
+      meld
     # ######################
     # DEV
-#      maven
-     	tmuxinator
+      gnumake
+      maven
+      tmuxinator
       #byobu
+
+    # ######################
+    # OPS
+    ansible
     # ######################
     # 	Virtualization
-#      podman
-#      docker-compose
+      podman
+      docker-compose
     # ######################
     # GUI
       # BROWSER
@@ -48,22 +53,23 @@ in
         brave
       # CHAT
 #        slack
-#        discord
+        discord
       # EDITORS
         sublime4
       # DB
-        robo3t
+        #robo3t
       # REST
-        postman
-        insomnia
+        #postman
+        #insomnia
   ];
 
   programs.home-manager.enable = true;
   programs.git = (pkgs.callPackage ./apps/git.nix {}).programs.git;
   programs.tmux = (pkgs.callPackage ./apps/tmux.nix {}).programs.tmux;
   programs.direnv = (pkgs.callPackage ./apps/direnv.nix {}).programs.direnv;
-  programs.zsh = (pkgs.callPackage ./apps/zsh.nix {}).programs.zsh;
-  
+  programs.neovim = (pkgs.callPackage ./apps/neovim/defaults.nix {}).programs.neovim;
+  #programs.zsh = (pkgs.callPackage ./apps/zsh.nix {}).programs.zsh;
+
   home.file.".tmuxinator.yml".source = ./templates/tmuxinator/default.yml;
   home.file.".aliases".source = ./templates/.aliases;
 

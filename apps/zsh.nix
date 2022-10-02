@@ -10,13 +10,29 @@
     # turn off this - WARNING: terminal is not fully functional
     initExtra = ''
 
+      export NIX_PATH=${"NIX_PATH:+$NIX_PATH:"}$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels
+      . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+
+
+      USE_POWERLINE="true"
       export TERM=xterm
       if [ -f ~/.aliases ]; then
           . ~/.aliases
       fi
 
+      # Manjaro specific
+      source "$(fzf-share)/key-bindings.zsh"
+      source "$(fzf-share)/completion.zsh"
+      source /usr/share/zsh/manjaro-zsh-prompt
+
+      [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
       complete -o default -F __start_kubectl k
       export KUBECONFIG=~/.kube/config
+
+      #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+      export SDKMAN_DIR="$HOME/.sdkman"
+      [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
     '';
 
     shellAliases = {
