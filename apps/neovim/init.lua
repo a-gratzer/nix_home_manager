@@ -24,17 +24,15 @@ end
 
 opt("w", "number", true)
 opt("w", "relativenumber", true)
+opt("b", "tabstop", 4)
 opt("b", "shiftwidth", 4)
-
-opt("o", "ignorecase", true)
-
-opt("o", "numberwidth", 2)
-opt("b", "undofile", true)
-opt("w", "wrap", true)
-opt("w", "cursorline", true)
-opt("w", "colorcolumn", "+1")
-
+opt("o", "autoindent", true)
 opt("o", "mouse", "a")
+opt("b", "autoindent", true)
+opt("o", "numberwidth", 2)
+opt("w", "cursorline", true)
 opt("b", "spelllang", "en,de")
 
+vim.cmd('colorscheme darkblue')
 
+require("colorizer").setup()

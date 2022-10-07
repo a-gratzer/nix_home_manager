@@ -50,14 +50,14 @@ in {
       # telescope-nvim
       # telescope-symbols-nvim
       # telescope-media-files  # doesn't support wayland yet
-      # nvim-colorizer-lua
+       nvim-colorizer-lua
       # nvim-treesitter
       # nvim-lspconfig
-       nixos-unstable.vimPlugins.lsp_extensions-nvim
-       completion-nvim
-       cmp-nvim-lsp
+       #nixos-unstable.vimPlugins.lsp_extensions-nvim
+       #completion-nvim
+       #cmp-nvim-lsp
        #nvim-cmp
-       lspkind-nvim
+       #lspkind-nvim
       # gitsigns-nvim
       # neogit
       # diffview-nvim
@@ -65,7 +65,7 @@ in {
       # nvim-autopairs
       # nixos-unstable.vimPlugins.galaxyline-nvim
       # vim-closetag
-       friendly-snippets
+       #friendly-snippets
       # vim-vsnip
        #nvim-tree-lua
       # nvim-web-devicons
@@ -75,17 +75,17 @@ in {
       #vim-plugins.zenmode-nvim
       #minimap-vim
       #vim-plugins.indent-blankline-nvim  # using my own derivation because the nixpkgs still uses the master branch
-      vim-easymotion
+      #vim-easymotion
       # quick-scope
       # matchit-zip
       # targets-vim
-       neoformat
-       vim-numbertoggle
+      # neoformat
+      # vim-numbertoggle
       # vim-markdown-composer
       # vimwiki
       # pkgs.vimwiki-markdown
       # vim-python-pep8-indent
-       lsp_signature-nvim
+      #lsp_signature-nvim
       #rust-tools-nvim
       #vim-plugins.keymap-layer-nvim
       #vim-plugins.hydra-nvim

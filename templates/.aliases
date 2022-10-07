@@ -14,3 +14,18 @@ alias mux=tmuxinator
 alias c=cntb
 alias k=kubectl
 alias docker=podman
+
+#cloud
+alias k=kubectl
+alias h=helm
+
+# Reload zsh
+alias szsh="source ~/.zshrc";
+
+# NIX
+# Reload home manager and zsh
+alias reload="home-manager switch && source ~/.zshrc";
+# Nix garbage collection
+alias garbage="nix-collect-garbage -d && docker image prune --force";
+# See which Nix packages are installed
+alias installed="nix-env --query --installed";

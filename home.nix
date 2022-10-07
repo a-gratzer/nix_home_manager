@@ -14,6 +14,10 @@ in
   # nixpkgs.overlays = [
   #   (import ./overlays.nix)
   # ];
+  home.sessionVariables = {
+      EDITOR = "nvim";
+      TERMINAL = "zsh";
+    };
 
   home.packages = with pkgs; [
     # ######################
@@ -26,8 +30,11 @@ in
       tree
       tldr
       bat
-      exa
+      exa # ls replacement written in Rust
+      fd # find replacement written in Rust
       zsh-history
+      protobuf # Protocol Buffers
+      httpie # Like curl but more user friendly
     # ######################
     # GIT
       git
@@ -41,7 +48,14 @@ in
 
     # ######################
     # OPS
-    ansible
+    ansible # Deployment done right
+    # ######################
+    # CLOUD
+    kubectl # Kubernetes CLI tool
+    kubectx # kubectl context switching
+    kubernetes-helm # Kubernetes package manager
+    kustomize
+    # minikube # Local Kubernetes
     # ######################
     # 	Virtualization
       podman
