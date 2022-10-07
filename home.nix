@@ -57,7 +57,7 @@ in
     kustomize
     # minikube # Local Kubernetes
     #k9s
-    lens
+    #lens
     # ######################
     # 	Virtualization
       podman
