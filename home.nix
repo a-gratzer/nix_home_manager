@@ -56,6 +56,8 @@ in
     kubernetes-helm # Kubernetes package manager
     kustomize
     # minikube # Local Kubernetes
+    #k9s
+    lens
     # ######################
     # 	Virtualization
       podman
