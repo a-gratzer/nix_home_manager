@@ -31,9 +31,9 @@ alias garbage="nix-collect-garbage -d && docker image prune --force";
 alias installed="nix-env --query --installed";
 
 #SSH
-alias ssh="ssh -p2222 ag@"
-alias ssh_bastion="ssh -p2222 ag@194.163.181.218"
-alias ssh_ctb1="ssh -p2222 ag@161.97.175.186"
-alias ssh_ctb2="ssh -p2222 ag@194.163.128.218"
-alias ssh_ctb3="ssh -p2222 ag@194.163.129.213"
-alias ssh_ctb4="ssh -p2222 ag@194.163.130.106"
+alias ssh-="ssh -p2222 ag@"
+alias ssh-bastion="ssh -p2222 ag@194.163.181.218"
+alias ssh-ctb1="ssh -p2222 ag@161.97.175.186"
+alias ssh-ctb2="ssh -p2222 ag@194.163.128.218"
+alias ssh-ctb3="ssh -p2222 ag@194.163.129.213"
+alias ssh-ctb4="ssh -p2222 ag@194.163.130.106"
