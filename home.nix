@@ -24,7 +24,7 @@ in
     # UTILS
       htop
       jq
-      yq
+      #yq
       wget
       zip
       unzip
