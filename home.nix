@@ -3,17 +3,25 @@
 let
   config = import ./config.nix;
 
+pythonPackages = with pkgs.python38Packages; [
+    pip
+    requests
+    jmespath
+];
+
 in
 {
-  # Home Manager needs a bit of information about you and the
-  # paths it should manage.
-  home.username = "ag";
-  home.homeDirectory = "/home/ag";
-  home.stateVersion = "22.05";
 
   # nixpkgs.overlays = [
   #   (import ./overlays.nix)
   # ];
+
+  home = {
+    username = "ag";
+    homeDirectory = "/home/ag";
+    stateVersion = "20.09";
+  };
+
   home.sessionVariables = {
       EDITOR = "nvim";
       TERMINAL = "zsh";
@@ -50,7 +58,7 @@ in
     # ######################
     # OPS
     ansible # Deployment done right
-    jmespath # ansible json_query
+
     # ######################
     # CLOUD
     kubectl # Kubernetes CLI tool
@@ -79,7 +87,7 @@ in
       # REST
         #postman
         #insomnia
-  ];
+  ] ++ pythonPackages ;
 
   programs.home-manager.enable = true;
   programs.git = (pkgs.callPackage ./apps/git.nix {}).programs.git;
