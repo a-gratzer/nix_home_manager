@@ -15,6 +15,9 @@ alias c=cntb
 alias k=kubectl
 alias docker=podman
 
+# Apps
+alias wiregui="/opt/wireguard/wiregui.AppImage"
+
 #cloud
 alias k=kubectl
 alias h=helm

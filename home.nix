@@ -44,6 +44,10 @@ in
       zsh-history
       protobuf # Protocol Buffers
       httpie # Like curl but more user friendly
+
+    # ######################
+    # NETWORK
+    wireguard-tools
     # ######################
     # GIT
       git
