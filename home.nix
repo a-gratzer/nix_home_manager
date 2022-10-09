@@ -62,7 +62,7 @@ in
     # ######################
     # OPS
     ansible # Deployment done right
-
+#    jmespath # ansible json_query
     # ######################
     # CLOUD
     kubectl # Kubernetes CLI tool
