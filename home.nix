@@ -61,7 +61,7 @@ in
 
     # ######################
     # OPS
-    ansible # Deployment done right
+    #ansible # Deployment done right
 #    jmespath # ansible json_query
     # ######################
     # CLOUD
