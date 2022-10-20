@@ -1,6 +1,13 @@
-{ lib, fetchFromGitHub }:
+{ config, lib, pkgs, fetchFromGitHub, ...  }:
 
 {
+  programs.broot = {
+    enable = true;
+    enableFishIntegration = true;
+    enableZshIntegration = true;
+  };
+
+
   programs.zsh = {
     enable = true;
     defaultKeymap = "viins";
@@ -10,29 +17,37 @@
     # turn off this - WARNING: terminal is not fully functional
     initExtra = ''
 
-      export NIX_PATH=${"NIX_PATH:+$NIX_PATH:"}$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels
-      . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
-
-
+      # Use powerline
       USE_POWERLINE="true"
-      export TERM=xterm
-      if [ -f ~/.aliases ]; then
-          . ~/.aliases
+      # Source manjaro-zsh-configuration
+      if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
+        source /usr/share/zsh/manjaro-zsh-config
       fi
-
-      # Manjaro specific
-      source "$(fzf-share)/key-bindings.zsh"
-      source "$(fzf-share)/completion.zsh"
-      source /usr/share/zsh/manjaro-zsh-prompt
+      # Use manjaro zsh prompt
+      if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
+        source /usr/share/zsh/manjaro-zsh-prompt
+      fi
 
       [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-      complete -o default -F __start_kubectl k
-      export KUBECONFIG=~/.kube/config
+      # add nix to the path and then start the tmuxinator which is nix based
+      if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
+        source $HOME/.nix-profile/etc/profile.d/nix.sh
+        tmuxinator
+      fi
+
+      source $HOME/.aliases
+
+      export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels
+      . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+
 
       #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
       export SDKMAN_DIR="$HOME/.sdkman"
       [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+      complete -o default -F __start_kubectl k
+      export KUBECONFIG=~/.kube/config
     '';
 
     shellAliases = {

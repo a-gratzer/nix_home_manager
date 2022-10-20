@@ -3,7 +3,8 @@
 let
   config = import ./config.nix;
 
-pythonPackages = with pkgs.python38Packages; [
+pythonPackages = with pkgs.python310Packages; [
+    ansible
     pip
     requests
     jmespath
@@ -61,8 +62,7 @@ in
 
     # ######################
     # OPS
-    #ansible # Deployment done right
-#    jmespath # ansible json_query
+    #ansible
     # ######################
     # CLOUD
     kubectl # Kubernetes CLI tool
@@ -98,7 +98,7 @@ in
   programs.tmux = (pkgs.callPackage ./apps/tmux.nix {}).programs.tmux;
   programs.direnv = (pkgs.callPackage ./apps/direnv.nix {}).programs.direnv;
   programs.neovim = (pkgs.callPackage ./apps/neovim/defaults.nix {}).programs.neovim;
-  #programs.zsh = (pkgs.callPackage ./apps/zsh.nix {}).programs.zsh;
+  programs.zsh = (pkgs.callPackage ./apps/zsh.nix {}).programs.zsh;
 
   home.file.".tmuxinator.yml".source = ./templates/tmuxinator/default.yml;
   home.file.".aliases".source = ./templates/.aliases;
