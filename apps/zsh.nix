@@ -48,6 +48,8 @@
 
       complete -o default -F __start_kubectl k
       export KUBECONFIG=~/.kube/config
+
+      XDG_DATA_DIRS=$HOME/.nix-profile/share:$XDG_DATA_DIRS to ~/.profile
     '';
 
     shellAliases = {

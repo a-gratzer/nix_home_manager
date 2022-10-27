@@ -3,12 +3,6 @@
 let
   config = import ./config.nix;
 
-pythonPackages = with pkgs.python310Packages; [
-    ansible
-    pip
-    requests
-    jmespath
-];
 
 in
 {
@@ -71,7 +65,7 @@ in
     kustomize
     # minikube # Local Kubernetes
     #k9s
-    #lens
+    lens
     # ######################
     # 	Virtualization
       podman
@@ -91,7 +85,7 @@ in
       # REST
         #postman
         #insomnia
-  ] ++ pythonPackages ;
+  ] ;
 
   programs.home-manager.enable = true;
   programs.git = (pkgs.callPackage ./apps/git.nix {}).programs.git;
@@ -108,5 +102,8 @@ in
   xdg.enable=true;
   xdg.mime.enable=true;
   targets.genericLinux.enable=true;
-  xdg.mimeApps.defaultApplications = { "text/html" = ["chromium-browser.desktop"];};
+  xdg.mimeApps.defaultApplications = { "text/html" = [
+    "chromium-browser.desktop"
+    "lens"
+  ];};
 }
