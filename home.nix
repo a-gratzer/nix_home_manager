@@ -65,7 +65,7 @@ in
     kustomize
     # minikube # Local Kubernetes
     #k9s
-    lens
+    #lens
     # ######################
     # 	Virtualization
       podman
@@ -99,11 +99,11 @@ in
 
   news.display = "silent";
 
+
   xdg.enable=true;
   xdg.mime.enable=true;
   targets.genericLinux.enable=true;
   xdg.mimeApps.defaultApplications = { "text/html" = [
     "chromium-browser.desktop"
-    "lens"
   ];};
 }
