@@ -77,7 +77,7 @@ in
         brave
       # CHAT
 #        slack
-        discord
+        #discord
       # EDITORS
         sublime4
       # DB
