@@ -25,6 +25,7 @@ in
   home.packages = with pkgs; [
     # ######################
     # UTILS
+      pwgen
       htop
       jq
       #yq
@@ -77,7 +78,7 @@ in
         brave
       # CHAT
 #        slack
-        #discord
+        discord
       # EDITORS
         sublime4
       # DB
