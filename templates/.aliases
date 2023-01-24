@@ -16,8 +16,8 @@ alias k=kubectl
 alias docker=podman
 
 # Apps
-alias wiregui="/opt/wireguard/wiregui.AppImage &"
-alias lens="/opt/lens/Lens.AppImage &"
+#alias lens="/opt/lens/Lens.AppImage &"
+#alias cntb="./opt/contabo/cntb"
 
 #cloud
 alias k=kubectl

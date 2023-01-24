@@ -19,14 +19,6 @@
 
       # Use powerline
       USE_POWERLINE="true"
-      # Source manjaro-zsh-configuration
-      if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
-        source /usr/share/zsh/manjaro-zsh-config
-      fi
-      # Use manjaro zsh prompt
-      if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
-        source /usr/share/zsh/manjaro-zsh-prompt
-      fi
 
       [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -48,7 +40,9 @@
 
       complete -o default -F __start_kubectl k
       export KUBECONFIG=~/.kube/config
+      export XDG_DATA_DIRS=\"$HOME/.nix-profile/share:$XDG_DATA_DIRS\"
 
+      neofetch
     '';
 
     shellAliases = {
@@ -72,7 +66,7 @@
     # out of the box plugins - https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins
     oh-my-zsh = {
       enable = true;
-      theme = "eastwood";
+      theme = "agnoster";
       plugins = [
         "git"
         "vi-mode"

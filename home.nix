@@ -3,7 +3,6 @@
 let
   config = import ./config.nix;
 
-
 in
 {
 
@@ -19,7 +18,7 @@ in
 
   home.sessionVariables = {
       EDITOR = "nvim";
-      TERMINAL = "zsh";
+      TERMINAL = "bash";
     };
 
   home.packages = with pkgs; [
@@ -40,7 +39,7 @@ in
       zsh-history
       protobuf # Protocol Buffers
       httpie # Like curl but more user friendly
-
+      neofetch
     # ######################
     # NETWORK
     wireguard-tools
@@ -66,7 +65,7 @@ in
     kustomize
     # minikube # Local Kubernetes
     #k9s
-    #lens
+#    lens -> crash on startup...
     # ######################
     # 	Virtualization
       podman
@@ -77,29 +76,28 @@ in
         google-chrome
         brave
       # CHAT
-#        slack
+        slack
         discord
       # EDITORS
         sublime4
       # DB
-        #robo3t
+        robo3t
       # REST
-        #postman
-        #insomnia
+        postman
+        insomnia
   ] ;
 
   programs.home-manager.enable = true;
   programs.git = (pkgs.callPackage ./apps/git.nix {}).programs.git;
-  programs.tmux = (pkgs.callPackage ./apps/tmux.nix {}).programs.tmux;
-  programs.direnv = (pkgs.callPackage ./apps/direnv.nix {}).programs.direnv;
+#  programs.direnv = (pkgs.callPackage ./apps/direnv.nix {}).programs.direnv;
   programs.neovim = (pkgs.callPackage ./apps/neovim/defaults.nix {}).programs.neovim;
   programs.zsh = (pkgs.callPackage ./apps/zsh.nix {}).programs.zsh;
+  programs.tmux = (pkgs.callPackage ./apps/tmux.nix {}).programs.tmux;
 
   home.file.".tmuxinator.yml".source = ./templates/tmuxinator/default.yml;
   home.file.".aliases".source = ./templates/.aliases;
 
   news.display = "silent";
-
 
   xdg.enable=true;
   xdg.mime.enable=true;

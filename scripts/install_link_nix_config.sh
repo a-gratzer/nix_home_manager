@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ln -s ${PWD}../ ~/.config/nixpkgs
+ln -s ${PWD}/../ ~/.config/nixpkgs
