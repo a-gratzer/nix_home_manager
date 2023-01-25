@@ -39,3 +39,4 @@ color_update_installed=True
 # Installs
 
     sudo dnf install gnome-tweaks 
+    sudo dnf install wireguard-tools
