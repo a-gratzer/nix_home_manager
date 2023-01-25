@@ -35,3 +35,7 @@ color_search_match=True
 color_update_installed=True
 
 ```
+
+# Installs
+
+    sudo dnf install gnome-tweaks 

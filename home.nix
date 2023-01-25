@@ -85,6 +85,10 @@ in
       # REST
         postman
         insomnia
+        # screenshot-tool
+        flameshot
+        # screen-recorder
+        kazam
   ] ;
 
   programs.home-manager.enable = true;
