@@ -42,6 +42,19 @@
       export KUBECONFIG=~/.kube/config
       export XDG_DATA_DIRS=\"$HOME/.nix-profile/share:$XDG_DATA_DIRS\"
 
+      export SDKMAN_DIR="/home/ag/.sdkman"
+      [[ -s \"/home/ag/.sdkman/bin/sdkman-init.sh\" ]] && source \"/home/ag/.sdkman/bin/sdkman-init.sh\"
+
+
+      # MAVEN
+      export M2_HOME=/home/ag/.sdkman/candidates/maven/current
+      export M2=$M2_HOME/bin
+      export PATH=$M2:$PATH
+
+      # VISUALVM
+      export VISUALVM_HOME=/home/ag/.sdkman/candidates/visualvm/current
+      export PATH=$VISUALVM_HOME:$PATH
+
       neofetch
     '';
 

@@ -40,3 +40,11 @@ color_update_installed=True
 
     sudo dnf install gnome-tweaks 
     sudo dnf install wireguard-tools
+    # download and set sdkman_zshrc to tmp file
+    # copy stuff to managed zshrc file 
+    curl -s "https://get.sdkman.io" | bash
+
+# Terminal
+    sdk install java xyz
+    sdk install maven xyz
+    sdk install visualvm

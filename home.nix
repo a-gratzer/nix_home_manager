@@ -18,7 +18,7 @@ in
 
   home.sessionVariables = {
       EDITOR = "nvim";
-      TERMINAL = "bash";
+      TERMINAL = "zsh";
     };
 
   home.packages = with pkgs; [
@@ -42,7 +42,7 @@ in
       neofetch
     # ######################
     # NETWORK
-    wireguard-tools
+      wireguard-tools
     # ######################
     # GIT
       git
@@ -50,7 +50,7 @@ in
     # ######################
     # DEV
       gnumake
-      maven
+#      maven
       tmuxinator
       #byobu
 
