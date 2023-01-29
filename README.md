@@ -48,3 +48,7 @@ color_update_installed=True
     sdk install java xyz
     sdk install maven xyz
     sdk install visualvm
+
+# Software-Center
+    
+    RESP.app

@@ -89,6 +89,8 @@ in
         flameshot
         # screen-recorder
         kazam
+        # VNC
+        remmina
   ] ;
 
   programs.home-manager.enable = true;
