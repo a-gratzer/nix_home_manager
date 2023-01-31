@@ -36,6 +36,11 @@ color_update_installed=True
 
 ```
 
+# bash
+Add to <code>.bashrc</code>:
+
+    source $HOME/.aliases
+
 # Installs
 
     sudo dnf install gnome-tweaks 
@@ -52,3 +57,10 @@ color_update_installed=True
 # Software-Center
     
     RESP.app
+
+# AppAmages
+
+## Lens
+    Download: https://github.com/MuhammedKalkan/OpenLens/releases
+    copy to /opt/lens/OpenLens.AppImage
+    chmod +x /opt/lens/OpenLens.AppImage

@@ -22,6 +22,7 @@ alias docker=podman
 #cloud
 alias k=kubectl
 alias h=helm
+alias lens="/opt/lens/OpenLens.AppImage --no-sandbox &"
 
 # Reload zsh
 alias szsh="source ~/.zshrc";
