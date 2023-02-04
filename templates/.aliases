@@ -16,13 +16,13 @@ alias k=kubectl
 alias docker=podman
 
 # Apps
-#alias lens="/opt/lens/Lens.AppImage &"
+alias lens="/opt/lens/lens.AppImage &"
 #alias cntb="./opt/contabo/cntb"
 
 #cloud
 alias k=kubectl
 alias h=helm
-alias lens="/opt/lens/OpenLens.AppImage --no-sandbox &"
+#alias lens="/opt/lens/OpenLens.AppImage --no-sandbox &"
 
 # Reload zsh
 alias szsh="source ~/.zshrc";

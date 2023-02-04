@@ -24,6 +24,7 @@ in
   home.packages = with pkgs; [
     # ######################
     # UTILS
+      openssl
       pwgen
       htop
       jq
