@@ -92,8 +92,6 @@ in
         kazam
         # VNC
         remmina
-        # todo app
-        todoist
 
   ] ;
 
