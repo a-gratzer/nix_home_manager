@@ -1,3 +1,26 @@
 # .ssh/config
+
 Host github.com
  IdentityFile ~/.ssh/id_ag_laptop
+
+Host ag-db
+ HostName 194.163.181.218
+ User ag
+ Port 2222
+ IdentityFile ~/.ssh/ag
+
+Host 194.163.181.218
+ HostName 194.163.181.218
+ User ag
+ Port 2222
+ IdentityFile ~/.ssh/ag
+
+Host 10.99.?.*
+ User ag
+ Port 2222
+ IdentityFile ~/.ssh/ag
+
+Host 10.50.?.*
+ User ag
+ Port 2222
+ IdentityFile ~/.ssh/ag
