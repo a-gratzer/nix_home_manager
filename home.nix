@@ -92,6 +92,9 @@ in
         kazam
         # VNC
         remmina
+        # todo app
+        todoist
+
   ] ;
 
   programs.home-manager.enable = true;
