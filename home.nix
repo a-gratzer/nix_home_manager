@@ -45,6 +45,9 @@ in
     # NETWORK
       wireguard-tools
     # ######################
+    # DATABASES
+      mongodb
+    # ######################
     # GIT
       git
       meld
