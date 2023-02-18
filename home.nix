@@ -45,8 +45,8 @@ in
     # NETWORK
       wireguard-tools
     # ######################
-    # DATABASES
-      mongodb
+    # mongostat mongotop mongoimport mongodump bsondump mongofiles mongoexport mongorestore
+    mongodb-tools
     # ######################
     # GIT
       git
