@@ -95,7 +95,7 @@ in
         kazam
         # VNC
         remmina
-
+	joplin
   ] ;
 
   programs.home-manager.enable = true;
