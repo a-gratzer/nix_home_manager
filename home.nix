@@ -38,7 +38,8 @@ in
       exa # ls replacement written in Rust
       fd # find replacement written in Rust
       zsh-history
-      protobuf # Protocol Buffers
+      #protobuf # Protocol Buffers
+      protobuf3_17
       httpie # Like curl but more user friendly
       neofetch
     # ######################
@@ -73,6 +74,7 @@ in
     # ######################
     # 	Virtualization
       podman
+      #docker
       docker-compose
     # ######################
     # GUI
