@@ -56,8 +56,9 @@ in
     # DEV
       gnumake
 #      maven
-      tmuxinator
+#      tmuxinator
       #byobu
+      awscli2
 
     # ######################
     # OPS
@@ -88,6 +89,7 @@ in
         sublime4
       # DB
         robo3t
+        dbeaver
       # REST
         postman
         insomnia
@@ -97,7 +99,6 @@ in
         kazam
         # VNC
         remmina
-	joplin
   ] ;
 
   programs.home-manager.enable = true;
