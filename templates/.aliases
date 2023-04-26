@@ -6,7 +6,7 @@ alias la='exa -a'
 alias lt='exa -T --level=3'
 # File inspection
 alias cat=bat
-
+alias open=xdg-open
 # tmux
 alias mux=tmuxinator
 
@@ -14,6 +14,7 @@ alias mux=tmuxinator
 alias c=cntb
 alias k=kubectl
 alias docker=podman
+
 
 # Apps
 alias lens="/opt/lens/lens.AppImage &"
