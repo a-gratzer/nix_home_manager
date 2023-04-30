@@ -6,6 +6,11 @@ Host bitbucket.org
 Host github.com
  IdentityFile ~/.ssh/id_ag_laptop
 
+Host ag-?.ag-node
+ User ag
+ Port 2222
+ IdentityFile ~/.ssh/ag
+
 Host ag-db
  HostName 194.163.181.218
  User ag

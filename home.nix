@@ -110,6 +110,7 @@ in
 
   home.file.".tmuxinator.yml".source = ./templates/tmuxinator/default.yml;
   home.file.".aliases".source = ./templates/.aliases;
+  home.file.".ssh/config".source = ./templates/ssh/config;
 
   news.display = "silent";
 
