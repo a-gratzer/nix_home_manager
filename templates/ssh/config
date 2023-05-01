@@ -38,3 +38,21 @@ Host 10.50.?.*
   User ag
   Port 2222
   IdentityFile ~/.ssh/ag
+
+ Host 194.163.130.106
+  HostName 194.163.130.106
+  User ag
+  Port 2222
+  IdentityFile ~/.ssh/ag
+
+ Host 194.163.129.213
+  HostName 194.163.129.213
+  User ag
+  Port 2222
+  IdentityFile ~/.ssh/ag
+
+ Host 194.163.128.218
+  HostName 194.163.128.218
+  User ag
+  Port 2222
+  IdentityFile ~/.ssh/ag
