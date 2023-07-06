@@ -99,6 +99,7 @@ in
         kazam
         # VNC
         remmina
+        p7zip
   ] ;
 
   programs.home-manager.enable = true;
