@@ -18,7 +18,7 @@ alias docker=podman
 
 # Apps
 alias lens="/opt/lens/lens.AppImage &"
-#alias cntb="./opt/contabo/cntb"
+alias cntb="/opt/contabo/cntb"
 
 #cloud
 alias k=kubectl
