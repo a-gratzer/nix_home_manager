@@ -99,6 +99,10 @@ in
         kazam
         # VNC
         remmina
+        natscli
+        nats-top
+        # LDAP
+        apache-directory-studio
         p7zip
   ] ;
 

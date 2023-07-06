@@ -1,5 +1,8 @@
 # .ssh/config
 
+Host git.appradar.cloud
+ IdentityFile ~/.ssh/ag
+
 Host bitbucket.org
  IdentityFile ~/.ssh/ag
 
@@ -56,3 +59,10 @@ Host 10.50.?.*
   User ag
   Port 2222
   IdentityFile ~/.ssh/ag
+
+ Host 10.0.0.178
+  HostName 10.0.0.178
+  User andreas.gratzer
+  Port 22
+  IdentityFile ~/.ssh/ag
+
