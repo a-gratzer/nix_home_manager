@@ -33,6 +33,6 @@ opt("o", "numberwidth", 2)
 opt("w", "cursorline", true)
 opt("b", "spelllang", "en,de")
 
-vim.cmd('colorscheme darkblue')
+vim.cmd('colorscheme desert')
 
 require("colorizer").setup()
