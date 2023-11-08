@@ -13,7 +13,7 @@ alias mux=tmuxinator
 # clis
 alias c=cntb
 alias k=kubectl
-alias docker=podman
+#alias docker=podman
 
 
 # Apps
