@@ -93,7 +93,13 @@ in
       # LDAP
       apache-directory-studio
       p7zip
-  
+      jp2a # image to ascii
+      fortune
+      cowsay
+#      chrome-gnome-shell
+      gnome-browser-connector
+#      gnome-extension-manager
+
   ] ;
 
   programs.home-manager.enable = true;
@@ -104,7 +110,9 @@ in
   programs.tmux = (pkgs.callPackage ./apps/tmux.nix {}).programs.tmux;
 
   home.file.".tmuxinator.yml".source = ./templates/tmuxinator/default.yml;
-
+  home.file.".aliases".source = ./templates/.aliases;
+  home.file.".ssh/config".source = ./templates/ssh/config;
+  home.file.".config/neofetch/terminal-ascii.txt".source = ./templates/neofetch/terminal-ascii.txt;
 
   news.display = "silent";
   xdg.enable=true;

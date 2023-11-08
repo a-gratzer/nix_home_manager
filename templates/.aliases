@@ -1,9 +1,9 @@
 # Dir inspection
-alias ls='exa'
-alias l='exa'
-alias ll='exa -alhF'
-alias la='exa -a'
-alias lt='exa -T --level=3'
+alias ls='eza'
+alias l='eza'
+alias ll='eza -alhF'
+alias la='eza -a'
+alias lt='eza -T --level=3'
 # File inspection
 alias cat=bat
 alias open=xdg-open

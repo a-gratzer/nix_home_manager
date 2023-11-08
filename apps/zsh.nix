@@ -55,7 +55,7 @@
       export VISUALVM_HOME=/home/ag/.sdkman/candidates/visualvm/current
       export PATH=$VISUALVM_HOME:$PATH
 
-      neofetch
+      neofetch --ascii ~/.config/neofetch/terminal-ascii.txt
     '';
 
     shellAliases = {
@@ -79,7 +79,7 @@
     # out of the box plugins - https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins
     oh-my-zsh = {
       enable = true;
-      theme = "agnoster";
+      theme = "alanpeabody";
       plugins = [
         "git"
         "vi-mode"
