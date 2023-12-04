@@ -80,7 +80,7 @@ in
       robo3t
       dbeaver
       # REST
-      #postman
+      # postman
       insomnia
       # screenshot-tool
       flameshot
