@@ -99,7 +99,8 @@ in
 #      chrome-gnome-shell
       gnome-browser-connector
 #      gnome-extension-manager
-
+        # anti-vir
+      clamav
   ] ;
 
   programs.home-manager.enable = true;
