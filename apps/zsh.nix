@@ -11,7 +11,7 @@
   programs.zsh = {
     enable = true;
     defaultKeymap = "viins";
-    enableAutosuggestions = true;
+#    autosuggestion.enable = true;
     enableCompletion = true;
 
     # turn off this - WARNING: terminal is not fully functional
@@ -21,13 +21,7 @@
       USE_POWERLINE="true"
 
       [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-      # add nix to the path and then start the tmuxinator which is nix based
-      if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
-        source $HOME/.nix-profile/etc/profile.d/nix.sh
-        tmuxinator
-      fi
-
+      
       source $HOME/.aliases
 
       export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels
@@ -55,7 +49,7 @@
       export VISUALVM_HOME=/home/ag/.sdkman/candidates/visualvm/current
       export PATH=$VISUALVM_HOME:$PATH
 
-      neofetch
+      neofetch --ascii ~/.config/neofetch/terminal-ascii.txt
     '';
 
     shellAliases = {
@@ -79,11 +73,16 @@
     # out of the box plugins - https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins
     oh-my-zsh = {
       enable = true;
-      theme = "agnoster";
+      theme = "alanpeabody";
+      #theme = "dieter";
       plugins = [
+      
+      	#"dnf"
+      	"colorize"
+      	"aws"
         "git"
         "vi-mode"
-        "golang"
+        #"golang"
         "colored-man-pages"
         "docker"
         "npm"

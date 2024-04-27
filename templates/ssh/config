@@ -4,7 +4,7 @@ Host git.appradar.cloud
  IdentityFile ~/.ssh/ag
 
 Host bitbucket.org
- IdentityFile ~/.ssh/ag
+ IdentityFile ~/.ssh/id_ag_laptop
 
 Host github.com
  IdentityFile ~/.ssh/id_ag_laptop
