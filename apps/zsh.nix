@@ -11,7 +11,7 @@
   programs.zsh = {
     enable = true;
     defaultKeymap = "viins";
-#    autosuggestion.enable = true;
+    #programs.zsh.autosuggesetions.enable = true;
     enableCompletion = true;
 
     # turn off this - WARNING: terminal is not fully functional
@@ -73,7 +73,8 @@
     # out of the box plugins - https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins
     oh-my-zsh = {
       enable = true;
-      theme = "alanpeabody";
+      theme = "gnzh";
+      #theme = "alanpeabody";
       #theme = "dieter";
       plugins = [
       
