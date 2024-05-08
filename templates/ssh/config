@@ -1,5 +1,10 @@
 # .ssh/config
 
+Host 77.237.246.27
+    Port 2222
+    User root
+    IdentityFile ~/.ssh/ag
+
 Host git.appradar.cloud
  IdentityFile ~/.ssh/ag
 

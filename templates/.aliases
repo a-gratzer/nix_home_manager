@@ -13,6 +13,7 @@ alias mux=tmuxinator
 # clis
 alias c=cntb
 alias k=kubectl
+alias koidc=kubectl-oidc_login
 #alias docker=podman
 
 

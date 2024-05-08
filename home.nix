@@ -61,9 +61,11 @@ in
       # ######################
       # CLOUD
       kubectl # Kubernetes CLI tool
+      kubelogin-oidc
       #kubectx # kubectl context switching
       kubernetes-helm # Kubernetes package manager
       kustomize
+      talosctl
       k9s
       # lens
       # ######################
@@ -102,6 +104,7 @@ in
 #      gnome-extension-manager
         # anti-vir
       clamav
+      charles
   ] ;
 
   programs.home-manager.enable = true;
