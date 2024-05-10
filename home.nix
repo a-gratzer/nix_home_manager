@@ -66,6 +66,7 @@ in
       kubernetes-helm # Kubernetes package manager
       kustomize
       talosctl
+      cilium-cli
       k9s
       # lens
       # ######################
