@@ -42,7 +42,7 @@ in
       eza # ls replacement written in Rust
       fd # find replacement written in Rust
       zsh-history
-      protobuf # Protocol Buffers
+      protobuf_21 # Protocol Buffers
       httpie # Like curl but more user friendly
       neofetch
       # ######################
@@ -67,7 +67,11 @@ in
       kustomize
       talosctl
       cilium-cli
+      hubble
+      argocd
+      argo
       k9s
+      cloudflared
       # lens
       # ######################
       # Virtualization
@@ -106,6 +110,9 @@ in
         # anti-vir
       clamav
       charles
+      android-tools
+      frida-tools
+      mkcert
   ] ;
 
   programs.home-manager.enable = true;
