@@ -104,15 +104,13 @@ in
       p7zip
       jp2a # image to ascii
       fortune
-#      chrome-gnome-shell
       gnome-browser-connector
-#      gnome-extension-manager
-        # anti-vir
       clamav
       charles
       android-tools
       frida-tools
       mkcert
+      cobra-cli
   ] ;
 
   programs.home-manager.enable = true;

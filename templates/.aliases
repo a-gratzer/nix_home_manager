@@ -44,3 +44,6 @@ alias ssh-ctb1="ssh -p2222 ag@161.97.175.186"
 alias ssh-ctb2="ssh -p2222 ag@194.163.128.218"
 alias ssh-ctb3="ssh -p2222 ag@194.163.129.213"
 alias ssh-ctb4="ssh -p2222 ag@194.163.130.106"
+
+# SDKMAN
+alias visualvm="$VISUALVM_HOME/bin/visualvm"
