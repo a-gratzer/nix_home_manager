@@ -112,6 +112,7 @@ in
       frida-tools
       mkcert
       cobra-cli
+      rsync
   ] ;
 
   programs.home-manager.enable = true;
