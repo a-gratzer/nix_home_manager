@@ -59,15 +59,35 @@
     # .zshrc will get updated to source this plugin automatically
     plugins = [
       {
-        # nix-prefetch-url --unpack https://github.com/zsh-users/zsh-syntax-highlighting/archive/0.6.0.tar.gz
+        # nix-prefetch-url --unpack https://github.com/zsh-users/zsh-syntax-highlighting/archive/0.8.0.tar.gz
         name = "zsh-syntax-highlighting";
         src = fetchFromGitHub {
           owner = "zsh-users";
           repo = "zsh-syntax-highlighting";
-          rev = "0.6.0";
+          rev = "0.8.0";
           sha256 = "0zmq66dzasmr5pwribyh4kbkk23jxbpdw4rjxx0i7dx8jjp2lzl4";
         };
       }
+      {
+          # will source zsh-autosuggestions.plugin.zsh
+          name = "zsh-autosuggestions";
+          src = pkgs.fetchFromGitHub {
+            owner = "zsh-users";
+            repo = "zsh-autosuggestions";
+            rev = "v0.7.0";
+            sha256 = "0z6i9wjjklb4lvr7zjhbphibsyx51psv50gm07mbb0kj9058j6kc";
+          };
+        }
+        {
+                name = "fzf-tab";
+                src = pkgs.fetchFromGitHub {
+                  owner = "zsh-users";
+                  repo = "fzf-tab";
+                  rev = "v1.1.2";
+                  sha256 = "1b4pksrc573aklk71dn2zikiymsvq19bgvamrdffpf7azpq6kxl2";
+                };
+        }
+
     ];
 
     # out of the box plugins - https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins

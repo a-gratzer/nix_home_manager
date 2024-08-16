@@ -113,6 +113,7 @@ in
       mkcert
       cobra-cli
       rsync
+      fzf
   ] ;
 
   programs.home-manager.enable = true;
