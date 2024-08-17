@@ -114,6 +114,8 @@ in
       cobra-cli
       rsync
       fzf
+      cht-sh
+      ripgrep
   ] ;
 
   programs.home-manager.enable = true;
