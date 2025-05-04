@@ -109,13 +109,15 @@ in
       clamav
       charles
       android-tools
-      frida-tools
+      #frida-tools
       mkcert
       cobra-cli
       rsync
       fzf
       cht-sh
       ripgrep
+
+      go-protobuf
   ] ;
 
   programs.home-manager.enable = true;

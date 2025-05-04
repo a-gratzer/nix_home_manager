@@ -76,3 +76,8 @@ Host 10.50.?.*
   Port 22
   IdentityFile ~/.ssh/ag
 
+ Host contabo01
+  HostName 164.68.112.234
+  User ag
+  Port 2222
+  IdentityFile ~/.ssh/ag
