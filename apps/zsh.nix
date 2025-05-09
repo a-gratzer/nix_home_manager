@@ -49,7 +49,14 @@
       export VISUALVM_HOME=/home/ag/.sdkman/candidates/visualvm/current
       export PATH=$VISUALVM_HOME:$PATH
 
+      # VAULT
+      export VAULT_ADDR=https://vault.gratzer.cloud
+      export VAULT_TOKEN=$(jq -r '.root_token' /home/ag/workspace/devops/contabo/ignore/vault-keys.json)
+
       neofetch --ascii ~/.config/neofetch/terminal-ascii.txt
+
+      complete -C /usr/bin/vault vault
+
     '';
 
     shellAliases = {
