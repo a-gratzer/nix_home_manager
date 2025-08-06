@@ -118,6 +118,7 @@ in
       ripgrep
 
       go-protobuf
+      ansible_2_17
   ] ;
 
   programs.home-manager.enable = true;
@@ -130,7 +131,7 @@ in
   home.file.".smbcredentials".source = ./no_git/.smbcredentials;
   home.file.".aliases".source = ./templates/.aliases;
   home.file.".ssh/config".source = ./templates/ssh/config;
-  home.file.".config/neofetch/terminal-ascii.txt".source = ./templates/neofetch/terminal-ascii.txt;
+  #home.file.".config/neofetch/terminal-ascii.txt".source = ./templates/neofetch/terminal-ascii.txt;
   home.file.".config/neofetch/config.conf".source = ./templates/neofetch/config.conf;
 
   news.display = "silent";
