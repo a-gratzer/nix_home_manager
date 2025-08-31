@@ -4,9 +4,11 @@ alias l='eza'
 alias ll='eza -alhF'
 alias la='eza -a'
 alias lt='eza -T --level=3'
+
 # File inspection
 alias cat=bat
 alias open=xdg-open
+
 # tmux
 alias mux=tmuxinator
 
@@ -17,7 +19,6 @@ alias koidc=kubectl-oidc_login
 #alias docker=podman
 alias cht='cht.sh'
 alias chts='cht.sh --shell'
-
 
 # Apps
 alias lens="/opt/lens/lens.AppImage &"
@@ -41,6 +42,9 @@ alias installed="nix-env --query --installed";
 
 #SSH
 
-
 # SDKMAN
 alias visualvm="$VISUALVM_HOME/bin/visualvm"
+
+# monitoring
+alias htop=btop
+alias top=btop

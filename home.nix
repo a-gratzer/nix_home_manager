@@ -30,9 +30,10 @@ in
     # UTILS
       openssl
       pwgen
-      htop
+      # htop
+      btop-rocm
       jq
-      #yq
+      yq
       wget
       zip
       unzip
@@ -119,6 +120,8 @@ in
 
       go-protobuf
       ansible_2_17
+
+      libgourou
   ] ;
 
   programs.home-manager.enable = true;
