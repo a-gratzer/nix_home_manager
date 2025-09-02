@@ -84,7 +84,7 @@ Host 10.50.?.*
   IdentityFile ~/.ssh/ag
 
  Host homelab01
-  HostName 192.168.68.61
+  HostName 192.168.68.62
   User ag
   Port 2222
   IdentityFile ~/.ssh/ag
