@@ -83,8 +83,21 @@ Host 10.50.?.*
   Port 2222
   IdentityFile ~/.ssh/ag
 
+ Host contabo01_wg
+  HostName 10.99.0.2
+  User ag
+  Port 2222
+  IdentityFile ~/.ssh/ag
+
  Host homelab01
   HostName 192.168.68.62
   User ag
   Port 2222
   IdentityFile ~/.ssh/ag
+
+ Host homelab01_wg
+  HostName 10.99.0.3
+  User ag
+  Port 2222
+  IdentityFile ~/.ssh/ag
+
