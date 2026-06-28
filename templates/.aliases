@@ -20,6 +20,9 @@ alias koidc=kubectl-oidc_login
 alias cht='cht.sh'
 alias chts='cht.sh --shell'
 
+# Claude Code
+alias claude="claude --bare --settings ~/.config/claude-deepseek-settings.json --model sonnet"
+
 # Apps
 alias lens="/opt/lens/lens.AppImage &"
 alias cntb="/opt/contabo/cntb"
