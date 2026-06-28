@@ -2,7 +2,10 @@
 
 let
   config = import ./config.nix;
-
+  envContent = builtins.readFile ./no_git/.env;
+  deepseekKey = lib.removeSuffix "\n" (lib.removePrefix "DEEPSEEK_API_KEY=" envContent);
+  claudeSettingsTemplate = builtins.readFile ./templates/claude-deepseek-settings.json;
+  claudeSettings = builtins.replaceStrings ["sk-your-key-here"] [deepseekKey] claudeSettingsTemplate;
 in
 {
 
@@ -64,6 +67,7 @@ in
       # CLOUD
       kubectl # Kubernetes CLI tool
       kubelogin-oidc
+      kubectl-cnpg
       #kubectx # kubectl context switching
       kubernetes-helm # Kubernetes package manager
       kustomize
@@ -122,6 +126,11 @@ in
       ansible_2_17
 
       libgourou
+      postgresql_17_jit
+      k6
+      nodejs_20
+
+
   ] ;
 
   programs.home-manager.enable = true;
@@ -136,6 +145,7 @@ in
   home.file.".ssh/config".source = ./templates/ssh/config;
   #home.file.".config/neofetch/terminal-ascii.txt".source = ./templates/neofetch/terminal-ascii.txt;
   home.file.".config/neofetch/config.conf".source = ./templates/neofetch/config.conf;
+  home.file.".config/claude-deepseek-settings.json".text = claudeSettings;
 
   news.display = "silent";
 

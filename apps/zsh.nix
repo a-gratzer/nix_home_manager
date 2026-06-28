@@ -39,6 +39,7 @@
       export SDKMAN_DIR="/home/ag/.sdkman"
       [[ -s \"/home/ag/.sdkman/bin/sdkman-init.sh\" ]] && source \"/home/ag/.sdkman/bin/sdkman-init.sh\"
 
+      export PATH="$HOME/.local/bin:$PATH"
 
       # MAVEN
       export M2_HOME=/home/ag/.sdkman/candidates/maven/current

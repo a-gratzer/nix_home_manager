@@ -1,0 +1,11 @@
+{
+  "env": {
+    "CLAUDE_CODE_USE_VERTEX": "",
+    "ANTHROPIC_VERTEX_PROJECT_ID": "",
+    "CLOUD_ML_REGION": "",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "",
+    "ANTHROPIC_BASE_URL": "https://api.deepseek.com/anthropic",
+    "ANTHROPIC_AUTH_TOKEN": "sk-your-key-here",
+    "ANTHROPIC_API_KEY": "sk-your-key-here"
+  }
+}

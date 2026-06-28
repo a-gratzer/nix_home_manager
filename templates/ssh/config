@@ -78,7 +78,7 @@ Host 10.50.?.*
 
 
  Host contabo01
-  HostName 164.68.112.234
+  HostName 156.67.31.241
   User ag
   Port 2222
   IdentityFile ~/.ssh/ag
@@ -90,7 +90,7 @@ Host 10.50.?.*
   IdentityFile ~/.ssh/ag
 
  Host homelab01
-  HostName 192.168.68.62
+  HostName 192.168.68.100
   User ag
   Port 2222
   IdentityFile ~/.ssh/ag
