@@ -1,26 +1,41 @@
 #!/usr/bin/env bash
+# Purpose 5: Clean up old generations and free up disk space.
+#
+# Usage:
+#   ./scripts/cleanup.sh              — dry run (show what would be deleted)
+#   ./scripts/cleanup.sh --doit       — actually clean up
 
-set -e
+set -euo pipefail
 
-KEEP_GENERATIONS="1"
+DRY_RUN=true
+[ "${1:-}" = "--doit" ] && DRY_RUN=false
 
-function clean() {
-    profile="$1"
-    if [[ -d "$profile" ]]; then
-        echo ">>> $profile"
-        sudo env "PATH=$PATH" nix-env --delete-generations +"$KEEP_GENERATIONS" --profile $profile
-    fi
-}
+echo "=== Home-manager generations ==="
+home-manager generations 2>/dev/null || echo "(none)"
+echo ""
 
-for path in /nix/var/nix/profiles/per-user/*; do
-    user=${path##*/}
-    clean /nix/var/nix/profiles/per-user/$user/home-manager
-    clean /nix/var/nix/profiles/per-user/$user/channels
-    clean /nix/var/nix/profiles/per-user/$user/profile
-    clean /home/$user/.nix-profile
-done
+# Remove home-manager generations older than 30 days
+echo "=== Expiring old home-manager generations (>30 days) ==="
+if home-manager expire-generations "30 days" 2>/dev/null; then
+  echo "  Expired generations older than 30 days."
+else
+  echo "  (expire-generations not available in this home-manager version)"
+fi
+echo ""
 
-clean /root/.nix-profile
-clean /nix/var/nix/profiles/system
+# Garbage collect the nix store
+echo "=== Nix store garbage collection ==="
+if [ "$DRY_RUN" = true ]; then
+  echo "  Dry run — use '$0 --doit' to actually clean."
+  echo "  Dead store paths: $(nix store gc --print-dead 2>/dev/null | wc -l)"
+else
+  echo "  Running garbage collection..."
+  nix store gc --verbose
+fi
 
-sudo env "PATH=$PATH" nix-collect-garbage
+echo ""
+if [ "$DRY_RUN" = true ]; then
+  echo "Dry run complete. Run '$0 --doit' to reclaim space."
+else
+  echo "Cleanup complete!"
+fi

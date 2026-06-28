@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//home/ag/**)",
+      "Bash(nix --version)",
+      "Bash(nix-env --version)",
+      "Bash(nix-store --version)",
+      "Read(//etc/nix/**)",
+      "Bash(nix show-config *)",
+      "Bash(nix upgrade-nix *)",
+      "Bash(pkexec nix-env --profile /nix/var/nix/profiles/per-user/root/profile --install /nix/store/6qpfa1c19q4idpjij6s6yywkfvhp820s-nix-2.34.7)",
+      "Bash(nix eval *)",
+      "Bash(nix search *)",
+      "Bash(bash ./scripts/hm_switch.sh 2>&1)"
+    ]
+  }
+}

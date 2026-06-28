@@ -1,8 +1,6 @@
 { pkgs, lib, ... }:
 let
   vim-plugins = import ./plugins.nix { inherit pkgs lib; };
-  # nixos-master = import (builtins.fetchTarball https://github.com/NixOS/nixpkgs/archive/master.tar.gz) {};
-  nixos-unstable = import <unstable> {};
 in {
   # nixpkgs.overlays = [
   #   (import (builtins.fetchTarball {
@@ -10,13 +8,12 @@ in {
   #   }))
   # ];
   home.packages = with pkgs; [
-    nixos-unstable.nodePackages.pyright tree-sitter nixos-unstable.code-minimap
-    luaPackages.lua-lsp rnix-lsp nodePackages.vim-language-server
+    nodePackages.pyright tree-sitter code-minimap
+    luaPackages.lua-lsp nil nodePackages.vim-language-server
     nodePackages.yaml-language-server nodePackages.bash-language-server
-    nodePackages.vscode-json-languageserver-bin
+    vscode-json-languageserver
     #nodePackages.vscode-html-languageserver-bin
     #nodePackages.vscode-css-languageserver-bin
-    rnix-lsp
   ];
   programs.neovim = {
     enable = true;
@@ -24,6 +21,8 @@ in {
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
+    withRuby = false;
+    withPython3 = false;
     plugins = with pkgs.vimPlugins; [
       # csv-vim
       # vim-surround  # fix config

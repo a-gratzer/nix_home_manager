@@ -1,11 +1,8 @@
 { lib, config, pkgs, ... }:
 
 let
-  config = import ./config.nix;
-  envContent = builtins.readFile ./no_git/.env;
-  deepseekKey = lib.removeSuffix "\n" (lib.removePrefix "DEEPSEEK_API_KEY=" envContent);
+  # DeepSeek API key from no_git/.env (not tracked in Git — loaded at runtime by ZSH)
   claudeSettingsTemplate = builtins.readFile ./templates/claude-deepseek-settings.json;
-  claudeSettings = builtins.replaceStrings ["sk-your-key-here"] [deepseekKey] claudeSettingsTemplate;
 in
 {
 
@@ -16,7 +13,7 @@ in
   home = {
     username = "ag";
     homeDirectory = "/home/ag";
-    stateVersion = "23.11";
+    stateVersion = "25.05";
   };
 
 
@@ -45,10 +42,10 @@ in
       bat
       eza # ls replacement written in Rust
       fd # find replacement written in Rust
-      zsh-history
+      zsh-fzf-history-search
       protobuf_21 # Protocol Buffers
       httpie # Like curl but more user friendly
-      neofetch
+      fastfetch
       # ######################
       # NETWORK
       wireguard-tools
@@ -75,7 +72,7 @@ in
       cilium-cli
       hubble
       argocd
-      argo
+#      argo-workflows
       k9s
       cloudflared
       # lens
@@ -123,12 +120,12 @@ in
       ripgrep
 
       go-protobuf
-      ansible_2_17
+      ansible
 
       libgourou
       postgresql_17_jit
       k6
-      nodejs_20
+      nodejs_22
 
 
   ] ;
@@ -140,12 +137,12 @@ in
   programs.tmux = (pkgs.callPackage ./apps/tmux.nix {}).programs.tmux;
 
 
-  home.file.".smbcredentials".source = ./no_git/.smbcredentials;
+  #home.file.".smbcredentials".source = ./no_git/.smbcredentials;
   home.file.".aliases".source = ./templates/.aliases;
   home.file.".ssh/config".source = ./templates/ssh/config;
   #home.file.".config/neofetch/terminal-ascii.txt".source = ./templates/neofetch/terminal-ascii.txt;
   home.file.".config/neofetch/config.conf".source = ./templates/neofetch/config.conf;
-  home.file.".config/claude-deepseek-settings.json".text = claudeSettings;
+  home.file.".config/claude-deepseek-settings.json".source = ./templates/claude-deepseek-settings.json;
 
   news.display = "silent";
 

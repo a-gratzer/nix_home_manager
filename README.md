@@ -1,66 +1,45 @@
 # nix_home_manager
 
-	export NIX_PATH=${NIX_PATH:+$NIX_PATH:}$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels
-	export XDG_DATA_DIRS="/home/your_user/.nix-profile/share:$XDG_DATA_DIRS"
+Home-manager configuration using Nix flakes.
 
-# Set default shell
+## Prerequisites
 
-    command -v zsh | sudo tee -a /etc/shells
-    sudo chsh -s $(which zsh) $USER
+- Nix 2.17+ with flakes enabled (`experimental-features = nix-command flakes`)
+- This repo cloned
 
-# Install sdkman
+## Setup
 
-    curl -s "https://get.sdkman.io" | bash
-    source "$HOME/.sdkman/bin/sdkman-init.sh"
+```bash
+# Clone the repo and symlink it
+ln -s "$PWD" ~/.config/home-manager
 
-# Fedora - dnf conf
-    sudo nano /etc/dnf/dnf.conf
-
-```text
-# see `man dnf.conf` for defaults and possible options
-
-[main]
-gpgcheck=True
-installonly_limit=3
-clean_requirements_on_remove=True
-best=False
-skip_if_unavailable=True
-# Custom
-fastestmirror=True
-max_parallel_downloads=15
-keepcache=True
-defaulttypes=True
-color_list_available_upgrade=True
-color_search_match=True
-color_update_installed=True
-
+# Or use the install script
+./scripts/install_hm.sh
 ```
 
-# bash
-Add to <code>.bashrc</code>:
+## Usage
 
-    source $HOME/.aliases
+```bash
+# Apply changes
+home-manager switch --flake ~/workspace/nix_home_manager
 
-# Installs
+# Or use the helper script
+./scripts/hm_switch.sh
 
-    sudo dnf install gnome-tweaks 
-    sudo dnf install wireguard-tools
-    # download and set sdkman_zshrc to tmp file
-    # copy stuff to managed zshrc file 
-    curl -s "https://get.sdkman.io" | bash
+# Update nixpkgs & home-manager
+nix flake update ~/workspace/nix_home_manager
+home-manager switch --flake ~/workspace/nix_home_manager
 
-# Terminal
-    sdk install java xyz
-    sdk install maven xyz
-    sdk install visualvm
+# List generations
+home-manager generations
 
-# Software-Center
-    
-    RESP.app
+# Clean up old generations
+./scripts/cleanup.sh
+```
 
-# AppAmages
+## Claude Code alias
 
-## Lens
-    Download: https://github.com/MuhammedKalkan/OpenLens/releases
-    copy to /opt/lens/OpenLens.AppImage
-    chmod +x /opt/lens/OpenLens.AppImage
+Typing `claude` runs:
+```bash
+claude --bare --settings ~/.config/claude-deepseek-settings.json --model sonnet
+```

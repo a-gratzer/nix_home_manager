@@ -1,4 +1,4 @@
-{ config, lib, pkgs, fetchFromGitHub, ...  }:
+{ pkgs, fetchFromGitHub, ...  }:
 
 {
   programs.broot = {
@@ -14,7 +14,6 @@
     #programs.zsh.autosuggesetions.enable = true;
     enableCompletion = true;
 
-    # turn off this - WARNING: terminal is not fully functional
     initExtra = ''
 
       # Use powerline
@@ -24,9 +23,12 @@
       
       source $HOME/.aliases
 
-      export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels
       . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
+      # Load secrets (no_git/.env — not tracked in Git)
+      [ -f "$HOME/.local/share/nix-home-manager/.env" ] && source "$HOME/.local/share/nix-home-manager/.env"
+      # Also check the old location
+      [ -f "$HOME/workspace/nix_home_manager/no_git/.env" ] && source "$HOME/workspace/nix_home_manager/no_git/.env"
 
       #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
       export SDKMAN_DIR="$HOME/.sdkman"
@@ -34,10 +36,7 @@
 
       complete -o default -F __start_kubectl k
       export KUBECONFIG=~/.kube/config
-      export XDG_DATA_DIRS=\"$HOME/.nix-profile/share:$XDG_DATA_DIRS\"
-
-      export SDKMAN_DIR="/home/ag/.sdkman"
-      [[ -s \"/home/ag/.sdkman/bin/sdkman-init.sh\" ]] && source \"/home/ag/.sdkman/bin/sdkman-init.sh\"
+      export XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS"
 
       export PATH="$HOME/.local/bin:$PATH"
 
@@ -54,7 +53,7 @@
       export VAULT_ADDR=https://vault.gratzer.cloud
       export VAULT_TOKEN=$(jq -r '.root_token' /home/ag/workspace/devops/contabo/ignore/vault-keys.json)
 
-      neofetch --ascii ~/.config/neofetch/terminal-ascii.txt
+      fastfetch
 
       complete -C /usr/bin/vault vault
 

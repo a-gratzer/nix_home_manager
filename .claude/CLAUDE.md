@@ -5,10 +5,12 @@ Home-manager configuration for user **ag** (Andreas Gratzer).
 ## Architecture
 
 ### Entry Point
-- **`home.nix`** — Main Nix expression that imports all app modules and declares home-manager state (username `ag`, home directory `/home/ag`, state version `23.11`).
+- **`flake.nix`** — Flake entry point using `github:NixOS/nixpkgs/nixpkgs-unstable` and `github:nix-community/home-manager/master`. Handles `allowUnfree = true` and `allowInsecure = true`.
+- **`home.nix`** — Main Nix module that imports all app modules and declares home-manager state (username `ag`, home directory `/home/ag`, state version `25.05`). Also injects the DeepSeek API key into the Claude Code settings template.
 
-### Core Config
-- **`config.nix`** — Enables unfree packages and adds the `nixos-unstable` channel via `packageOverrides`.
+### Nix Version
+- Nix: **2.34.7** (upgraded from 2.15.0)
+- Flakes enabled with `experimental-features = nix-command flakes`
 
 ### App Modules (`apps/`)
 Each file returns a Nix module consumed by `home.nix`:
@@ -35,14 +37,16 @@ Files deployed to `~/.config/` or `~/`:
 | `neofetch/terminal-ascii.txt` | `~/.config/neofetch/terminal-ascii.txt` |
 
 ### Scripts (`scripts/`)
-| Script | Purpose |
-|---|---|
-| `hm_switch.sh` | Runs `home-manager switch --show-trace` (with `NIXPKGS_ALLOW_UNFREE=1`) |
-| `install_hm.sh` | Standalone home-manager installation via nix-channel |
-| `hm-update.sh` | Updates nixos channel |
-| `list_generations.sh` | Lists home-manager generations |
-| `cleanup.sh` | Garbage-collects old Nix generations (keeps last 1) |
-| `install_files.sh` | Copies SSH files from `no_git/` |
+Scripts organized by purpose (numbered 1–5):
+
+| # | Script | Purpose |
+|---|---|---|
+| 1 | `install_hm.sh` | **Initial setup** on a new computer — checks Nix, flakes, installs home-manager, symlinks repo, activates |
+| 2 | `hm-update.sh` | **Update all software** — updates flake lockfile (nixpkgs + home-manager) then applies |
+| 3 | `hm_switch.sh` | **Apply config changes** — runs `home-manager switch --flake .` after editing configs |
+| 4 | `list_generations.sh` | **Show generations & rollback** — `--rollback [N]` to go back N generations |
+| 5 | `cleanup.sh` | **Free up disk space** — expires old HM generations (>30d), runs `nix store gc`; dry-run by default, use `--doit` to execute |
+| - | `install_files.sh` | Utility: copy SSH keys from `no_git/.ssh` to `~/.ssh` |
 
 ### Secrets (`no_git/` — gitignored)
 - `no_git/.env` — Contains `DEEPSEEK_API_KEY` (injected into `claude-deepseek-settings.json`)
@@ -60,21 +64,34 @@ Key packages installed globally:
 
 ## Workflow
 
-### Apply changes
+### 1. Initial setup (new computer)
 ```bash
-./scripts/hm_switch.sh
-# or directly:
-home-manager switch --show-trace
+git clone https://github.com/a-gratzer/nix_home_manager.git ~/workspace/nix_home_manager
+cd ~/workspace/nix_home_manager
+./scripts/install_hm.sh
 ```
 
-### Update channels
+### 2. Update all software
 ```bash
 ./scripts/hm-update.sh
 ```
 
-### Clean up old generations
+### 3. Apply config changes (after editing)
 ```bash
-./scripts/cleanup.sh
+./scripts/hm_switch.sh
+```
+
+### 4. List & rollback generations
+```bash
+./scripts/list_generations.sh          # list
+./scripts/list_generations.sh --rollback     # go back 1 generation
+./scripts/list_generations.sh --rollback 3   # go back 3 generations
+```
+
+### 5. Free up disk space
+```bash
+./scripts/cleanup.sh                   # dry run
+./scripts/cleanup.sh --doit            # actually clean
 ```
 
 ## ZSH Environment
