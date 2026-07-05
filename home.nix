@@ -133,11 +133,12 @@ in
 
   ] ;
 
-  programs.home-manager.enable = true;
-  programs.git = (pkgs.callPackage ./apps/git.nix {}).programs.git;
-  programs.neovim = (pkgs.callPackage ./apps/neovim/defaults.nix {}).programs.neovim;
-  programs.zsh = (pkgs.callPackage ./apps/zsh.nix {}).programs.zsh;
-  programs.tmux = (pkgs.callPackage ./apps/tmux.nix {}).programs.tmux;
+  programs = (pkgs.callPackage ./apps/zsh.nix {}).programs // {
+    home-manager = { enable = true; };
+    git = (pkgs.callPackage ./apps/git.nix {}).programs.git;
+    neovim = (pkgs.callPackage ./apps/neovim/defaults.nix {}).programs.neovim;
+    tmux = (pkgs.callPackage ./apps/tmux.nix {}).programs.tmux;
+  };
 
 
   #home.file.".smbcredentials".source = ./no_git/.smbcredentials;

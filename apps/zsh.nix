@@ -1,4 +1,4 @@
-{ pkgs, fetchFromGitHub, ...  }:
+{ pkgs, ... }:
 
 {
   programs.broot = {
@@ -7,110 +7,109 @@
     enableZshIntegration = true;
   };
 
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    enableZshIntegration = true;
+  };
 
   programs.zsh = {
     enable = true;
     defaultKeymap = "viins";
-    #programs.zsh.autosuggesetions.enable = true;
     enableCompletion = true;
 
-    initExtra = ''
+    # ── Built-in plugin modules (replaces manual fetchFromGitHub) ──
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
 
-      # Use powerline
+    # ── History ──
+    history = {
+      size = 50000;
+      save = 50000;
+      path = "$HOME/.zsh_history";
+      ignoreDups = true;
+      ignoreSpace = true;            # commands starting with space aren't saved
+      share = true;                  # share history across sessions
+      expireDuplicatesFirst = true;
+      extended = true;               # save timestamps
+    };
+
+    # ── Options ──
+    autocd = true;                   # type directory name to cd into it
+
+    initExtra = ''
+      # Powerline
       USE_POWERLINE="true"
 
+      # FZF
       [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-      
-      source $HOME/.aliases
 
+      # Aliases
+      source "$HOME/.aliases"
+
+      # Home-manager session vars
       . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
       # Load secrets (no_git/.env — not tracked in Git)
       [ -f "$HOME/.local/share/nix-home-manager/.env" ] && source "$HOME/.local/share/nix-home-manager/.env"
-      # Also check the old location
       [ -f "$HOME/workspace/nix_home_manager/no_git/.env" ] && source "$HOME/workspace/nix_home_manager/no_git/.env"
 
-      #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+      # SDKMAN (must be last)
       export SDKMAN_DIR="$HOME/.sdkman"
       [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-      complete -o default -F __start_kubectl k
+      # Kubernetes
       export KUBECONFIG=~/.kube/config
-      export XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS"
 
+      # PATH
+      export XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS"
       export PATH="$HOME/.local/bin:$PATH"
 
-      # MAVEN
-      export M2_HOME=/home/ag/.sdkman/candidates/maven/current
-      export M2=$M2_HOME/bin
-      export PATH=$M2:$PATH
+      # SDKMAN paths
+      export M2_HOME="$HOME/.sdkman/candidates/maven/current"
+      export M2="$M2_HOME/bin"
+      export PATH="$M2:$PATH"
+      export VISUALVM_HOME="$HOME/.sdkman/candidates/visualvm/current"
+      export PATH="$VISUALVM_HOME:$PATH"
 
-      # VISUALVM
-      export VISUALVM_HOME=/home/ag/.sdkman/candidates/visualvm/current
-      export PATH=$VISUALVM_HOME:$PATH
+      # Vault (only if the vault-keys file exists — avoids errors when absent)
+      if [ -f /home/ag/workspace/devops/contabo/ignore/vault-keys.json ]; then
+        export VAULT_ADDR=https://vault.gratzer.cloud
+        export VAULT_TOKEN=$(jq -r '.root_token' /home/ag/workspace/devops/contabo/ignore/vault-keys.json)
+      fi
 
-      # VAULT
-      export VAULT_ADDR=https://vault.gratzer.cloud
-      export VAULT_TOKEN=$(jq -r '.root_token' /home/ag/workspace/devops/contabo/ignore/vault-keys.json)
-
+      # Welcome
       fastfetch
-
-      complete -C /usr/bin/vault vault
-
     '';
 
-    shellAliases = {
+    shellAliases = { };
 
-    };
-
-    # .zshrc will get updated to source this plugin automatically
+    # ── Manual plugins (only fzf-tab needs manual fetch now) ──
     plugins = [
       {
-        # nix-prefetch-url --unpack https://github.com/zsh-users/zsh-syntax-highlighting/archive/0.8.0.tar.gz
-        name = "zsh-syntax-highlighting";
-        src = fetchFromGitHub {
-          owner = "zsh-users";
-          repo = "zsh-syntax-highlighting";
-          rev = "0.8.0";
-          sha256 = "0zmq66dzasmr5pwribyh4kbkk23jxbpdw4rjxx0i7dx8jjp2lzl4";
+        name = "fzf-tab";
+        src = pkgs.fetchFromGitHub {
+          owner = "Aloxaf";
+          repo = "fzf-tab";
+          rev = "v1.1.2";
+          sha256 = "1b4pksrc573aklk71dn2zikiymsvq19bgvamrdffpf7azpq6kxl2";
         };
       }
-      {
-          # will source zsh-autosuggestions.plugin.zsh
-          name = "zsh-autosuggestions";
-          src = pkgs.fetchFromGitHub {
-            owner = "zsh-users";
-            repo = "zsh-autosuggestions";
-            rev = "v0.7.0";
-            sha256 = "0z6i9wjjklb4lvr7zjhbphibsyx51psv50gm07mbb0kj9058j6kc";
-          };
-        }
-        {
-                name = "fzf-tab";
-                src = pkgs.fetchFromGitHub {
-                  owner = "zsh-users";
-                  repo = "fzf-tab";
-                  rev = "v1.1.2";
-                  sha256 = "1b4pksrc573aklk71dn2zikiymsvq19bgvamrdffpf7azpq6kxl2";
-                };
-        }
-
     ];
 
-    # out of the box plugins - https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins
     oh-my-zsh = {
       enable = true;
       theme = "gnzh";
-      #theme = "alanpeabody";
-      #theme = "dieter";
       plugins = [
-      
-      	#"dnf"
-      	"colorize"
-      	"aws"
+        "colorize"
+        "aws"
         "git"
         "vi-mode"
-        #"golang"
         "colored-man-pages"
         "docker"
         "npm"
@@ -118,6 +117,13 @@
         "python"
         "sudo"
         "systemd"
+        # ── New additions ──
+        "z"               # jump to frequent directories by fuzzy name
+        "extract"         # universal archive extractor (x tar.gz zip rar 7z ...)
+        "kubectl"         # completion + k/kctx/kns aliases
+        "helm"            # completion for helm
+        "fzf"             # Ctrl-T (files), Ctrl-R (history), Alt-C (dirs)
+        "direnv"          # shell integration for direnv
       ];
     };
   };

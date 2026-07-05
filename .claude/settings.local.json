@@ -11,7 +11,9 @@
       "Bash(pkexec nix-env --profile /nix/var/nix/profiles/per-user/root/profile --install /nix/store/6qpfa1c19q4idpjij6s6yywkfvhp820s-nix-2.34.7)",
       "Bash(nix eval *)",
       "Bash(nix search *)",
-      "Bash(bash ./scripts/hm_switch.sh 2>&1)"
+      "Bash(bash ./scripts/hm_switch.sh 2>&1)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(k\\) for k in sorted\\(d.keys\\(\\)\\)]\")",
+      "Bash(nix build *)"
     ]
   }
 }
