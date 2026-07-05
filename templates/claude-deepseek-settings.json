@@ -3,9 +3,28 @@
     "CLAUDE_CODE_USE_VERTEX": "",
     "ANTHROPIC_VERTEX_PROJECT_ID": "",
     "CLOUD_ML_REGION": "",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "deepseek-v4-pro",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "deepseek-v4-pro",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-v4-flash",
     "ANTHROPIC_BASE_URL": "https://api.deepseek.com/anthropic",
     "ANTHROPIC_AUTH_TOKEN": "",
     "ANTHROPIC_API_KEY": ""
+  },
+  "model": "sonnet",
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ]
+    },
+    "web-fetch": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-server-fetch-typescript"
+      ]
+    }
   }
 }

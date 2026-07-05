@@ -8,7 +8,8 @@ REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 
 export NIXPKGS_ALLOW_UNFREE=1
 export NIXPKGS_ALLOW_INSECURE=1
+export PATH="/nix/var/nix/profiles/default/bin:$PATH"
 
 echo "=== Applying home-manager configuration ==="
-home-manager switch --flake "$REPO_DIR" --show-trace
+home-manager switch --flake "$REPO_DIR" --show-trace --impure
 echo "Done."

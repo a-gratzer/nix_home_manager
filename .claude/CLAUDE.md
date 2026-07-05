@@ -1,148 +1,81 @@
-# nix_home_manager
+# CLAUDE.md
 
-Home-manager configuration for user **ag** (Andreas Gratzer).
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Architecture
+## Commands
 
-### Entry Point
-- **`flake.nix`** — Flake entry point using `github:NixOS/nixpkgs/nixpkgs-unstable` and `github:nix-community/home-manager/master`. Handles `allowUnfree = true` and `allowInsecure = true`.
-- **`home.nix`** — Main Nix module that imports all app modules and declares home-manager state (username `ag`, home directory `/home/ag`, state version `25.05`). Also injects the DeepSeek API key into the Claude Code settings template.
-
-### Nix Version
-- Nix: **2.34.7** (upgraded from 2.15.0)
-- Flakes enabled with `experimental-features = nix-command flakes`
-
-### App Modules (`apps/`)
-Each file returns a Nix module consumed by `home.nix`:
-
-| File | Manages |
-|---|---|
-| `zsh.nix` | ZSH shell with oh-my-zsh (theme `gnzh`), zsh-syntax-highlighting, zsh-autosuggestions, fzf-tab, broot |
-| `git.nix` | Git: user name/email, aliases (`st`, `co`, `br`, `f`, `m`, `lg`), meld as difftool/mergetool, Chrome as web browser, vim as editor |
-| `tmux.nix` | Tmux: prefix `C-a`, mouse on, base-index 1, `|`/`-` for splits, alt-arrows for pane switching |
-| `neovim/defaults.nix` | Neovim: vi/vim aliases, LSP servers (pyright, lua-lsp, rnix-lsp, bash-language-server, etc.), ~30+ plugins (mostly commented out). Loads `init.lua` |
-| `neovim/plugins.nix` | Custom vim plugin derivations: `neoscroll-nvim`, `indent-blankline-nvim` |
-| `direnv.nix` | Direnv with nix-direnv + ZSH integration |
-| `ssh.nix` | SSH program enable (host configs are in `templates/ssh/config`) |
-
-### Templates (`templates/`)
-Files deployed to `~/.config/` or `~/`:
-
-| File | Destination |
-|---|---|
-| `claude-deepseek-settings.json` | `~/.config/claude-deepseek-settings.json` (DeepSeek API key injected from `no_git/.env`) |
-| `ssh/config` | `~/.ssh/config` |
-| `.aliases` | `~/.aliases` (sourced by ZSH) |
-| `neofetch/config.conf` | `~/.config/neofetch/config.conf` |
-| `neofetch/terminal-ascii.txt` | `~/.config/neofetch/terminal-ascii.txt` |
-
-### Scripts (`scripts/`)
-Scripts organized by purpose (numbered 1–5):
-
-| # | Script | Purpose |
-|---|---|---|
-| 1 | `install_hm.sh` | **Initial setup** on a new computer — checks Nix, flakes, installs home-manager, symlinks repo, activates |
-| 2 | `hm-update.sh` | **Update all software** — updates flake lockfile (nixpkgs + home-manager) then applies |
-| 3 | `hm_switch.sh` | **Apply config changes** — runs `home-manager switch --flake .` after editing configs |
-| 4 | `list_generations.sh` | **Show generations & rollback** — `--rollback [N]` to go back N generations |
-| 5 | `cleanup.sh` | **Free up disk space** — expires old HM generations (>30d), runs `nix store gc`; dry-run by default, use `--doit` to execute |
-| - | `install_files.sh` | Utility: copy SSH keys from `no_git/.ssh` to `~/.ssh` |
-
-### Secrets (`no_git/` — gitignored)
-- `no_git/.env` — Contains `DEEPSEEK_API_KEY` (injected into `claude-deepseek-settings.json`)
-- `no_git/.smbcredentials` — SMB credentials (deployed to `~/.smbcredentials`)
-- SSH keys are expected at `no_git/.ssh/`
-
-### Packages
-Key packages installed globally:
-- **Utils**: openssl, pwgen, btop-rocm, jq, yq, bat, eza, fd, ripgrep, fzf, tldr, tree
-- **K8s/Cloud**: kubectl, kubelogin-oidc, kubectl-cnpg, helm, kustomize, talosctl, cilium-cli, hubble, argocd, argo, k9s, cloudflared, awscli2
-- **Dev**: git, just, gnumake, go-protobuf, nodejs_20, protobuf_21
-- **Virtualization**: podman, docker-compose
-- **GUI**: sublime4, discord, flameshot, kazam, remmina, charles
-- **Other**: mongodb-tools, wireguard-tools, ansible_2_17, postgresql_17_jit, k6, gnome-browser-connector
-
-## Workflow
-
-### 1. Initial setup (new computer)
 ```bash
-git clone https://github.com/a-gratzer/nix_home_manager.git ~/workspace/nix_home_manager
-cd ~/workspace/nix_home_manager
+# Apply config changes after editing any .nix or template file
+./scripts/hm_switch.sh
+
+# Update nixpkgs & home-manager to latest, then apply
+./scripts/hm-update.sh
+
+# List generations / rollback
+./scripts/list_generations.sh
+./scripts/list_generations.sh --rollback        # go back 1
+./scripts/list_generations.sh --rollback 3      # go back N
+
+# Free up disk space (dry-run by default)
+./scripts/cleanup.sh --doit
+
+# First-time setup on a new machine
 ./scripts/install_hm.sh
 ```
 
-### 2. Update all software
-```bash
-./scripts/hm-update.sh
+`hm_switch.sh` runs `home-manager switch --flake . --show-trace --impure`. The `--impure` flag is required because `home.nix` reads `no_git/.env` at Nix evaluation time via `builtins.readFile`.
+
+## Architecture
+
+### Evaluation flow
+
+```
+flake.nix  →  home.nix  →  apps/*.nix
+                        →  templates/*  (deployed as home.file entries)
 ```
 
-### 3. Apply config changes (after editing)
+**`flake.nix`** defines a single `homeConfigurations."ag"` output pointing to `home.nix`. Uses `nixpkgs-unstable` + `home-manager/master`.
+
+**`home.nix`** does three things:
+1. Pulls the DeepSeek API key out of `no_git/.env` **at evaluation time** and injects it into the Claude settings template via `builtins.replaceStrings`. If `no_git/.env` is missing, `home-manager switch` will fail.
+2. Imports each app module via `pkgs.callPackage` (not the standard `imports = [...]` pattern). Each module returns an attrset, and `home.nix` picks only the relevant sub-key: `programs.git = (pkgs.callPackage ./apps/git.nix {}).programs.git`.
+3. Deploys template files with `home.file`.
+
+### API key injection
+
+`no_git/.env` must contain exactly `DEEPSEEK_API_KEY=<value>` on the first line. The key is parsed with `lib.splitString` and substituted into `templates/claude-deepseek-settings.json` before deployment to `~/.config/claude-deepseek-settings.json` and `~/.claude/settings.json` (with `force = true`, so home-manager overwrites manual edits on every switch).
+
+### Claude Code settings
+
+`templates/claude-deepseek-settings.json` configures Claude Code to route through DeepSeek's Anthropic-compatible API (`https://api.deepseek.com/anthropic`). Current model mapping:
+- Opus/Sonnet → `deepseek-v4-pro`
+- Haiku → `deepseek-v4-flash`
+
+To switch to native Claude models, set `ANTHROPIC_BASE_URL` to `""` and use an Anthropic key. For a one-off override: `claude --model deepseek-reasoner` or `ANTHROPIC_DEFAULT_OPUS_MODEL=deepseek-reasoner claude`.
+
+The `claude` alias (from `templates/.aliases`) runs:
 ```bash
-./scripts/hm_switch.sh
+claude --bare --settings ~/.config/claude-deepseek-settings.json --model sonnet
 ```
 
-### 4. List & rollback generations
-```bash
-./scripts/list_generations.sh          # list
-./scripts/list_generations.sh --rollback     # go back 1 generation
-./scripts/list_generations.sh --rollback 3   # go back 3 generations
-```
+MCP servers configured: `context7` and `web-fetch` (both via `npx`).
 
-### 5. Free up disk space
-```bash
-./scripts/cleanup.sh                   # dry run
-./scripts/cleanup.sh --doit            # actually clean
-```
+### Adding/removing packages
 
-## ZSH Environment
-- Default shell with oh-my-zsh (theme `gnzh`)
-- Plugins: git, aws, docker, npm, pip, python, sudo, systemd, vi-mode, colorize, colored-man-pages
-- SDKMAN loaded for Java/Maven/VisualVM management
-- Vault integration (`VAULT_ADDR=https://vault.gratzer.cloud`)
-- Neofetch runs on terminal start (using custom ASCII art)
-- Custom aliases sourced from `~/.aliases`
+All packages are declared in the `home.packages` list in `home.nix`. Add a package name from nixpkgs, then run `./scripts/hm_switch.sh`.
 
-## Git Configuration
-- User: Andreas Gratzer `<gratzer.andreas@gmail.com>`
-- Diff/Merge tool: meld
-- Web browser for git: Chrome
-- Editor: vim
+### Adding a new app module
 
-## Claude Code (DeepSeek)
-Claude Code is configured to route through DeepSeek's Anthropic-compatible API endpoint (`https://api.deepseek.com/anthropic`). The API key is injected from `no_git/.env` via Nix string replacement.
+1. Create `apps/myapp.nix` returning `{ programs.myapp = { ... }; }`.
+2. In `home.nix`, add: `programs.myapp = (pkgs.callPackage ./apps/myapp.nix {}).programs.myapp;`
 
-### Switching models
-- **DeepSeek Chat**: set `ANTHROPIC_DEFAULT_OPUS_MODEL` to `"deepseek-chat"`
-- **DeepSeek Reasoner (R1)**: set `ANTHROPIC_DEFAULT_OPUS_MODEL` to `"deepseek-reasoner"`
-- **Claude models**: point `ANTHROPIC_BASE_URL` to `""` and use an Anthropic API key
+## Secrets & gitignored files
 
-### One-off model override
-```bash
-claude --model deepseek-reasoner
-# or
-ANTHROPIC_DEFAULT_OPUS_MODEL=deepseek-reasoner claude
-```
+`no_git/` is gitignored. It must contain:
+- `.env` — `DEEPSEEK_API_KEY=...` (required for `home-manager switch`)
+- `.smbcredentials` — SMB credentials
+- `.ssh/` — SSH keys (copied to `~/.ssh/` via `scripts/install_files.sh`)
 
-## Tmux
-- Prefix: `C-a` (rebound from `C-b`)
-- Pane splits: `|` (horizontal), `-` (vertical)
-- Pane navigation: `Alt + arrow keys`
-- Sync panes: `prefix + e` (on), `prefix + E` (off)
-- Default shell: ZSH
-- History limit: 5000
+## Skills
 
-## Neovim
-- Leader key: Space
-- Relative line numbers
-- Tabs/shiftwidth: 4
-- Color scheme: desert
-- Colorizer plugin active
-
-## SSH Config
-Multiple hosts configured with port 2222, user `ag`, identity file `~/.ssh/ag`:
-- `contabo01` → `156.67.31.241`
-- `contabo01_wg` → `10.99.0.2`
-- `homelab01` → `192.168.68.100`
-- `homelab01_wg` → `10.99.0.3`
-- Various IP-based hosts (194.163.*, 192.168.*, 10.99.*, 10.50.*)
-- GitHub/Bitbucket use `~/.ssh/id_ag_laptop`
+`/commit-push` — stages all changes, scans for secrets, proposes a commit message, and optionally pushes (defined in `.claude/skills/commit-push.md`).

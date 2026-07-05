@@ -2,7 +2,10 @@
 
 let
   # DeepSeek API key from no_git/.env (not tracked in Git — loaded at runtime by ZSH)
+  envFile = builtins.readFile (/home/ag/workspace/nix_home_manager + "/no_git/.env");
+  deepseekApiKey = lib.removeSuffix "\n" (lib.last (lib.splitString "=" (lib.head (lib.splitString "\n" envFile))));
   claudeSettingsTemplate = builtins.readFile ./templates/claude-deepseek-settings.json;
+  claudeSettings = builtins.replaceStrings [ "\"ANTHROPIC_API_KEY\": \"\"" ] [ "\"ANTHROPIC_API_KEY\": \"${deepseekApiKey}\"" ] claudeSettingsTemplate;
 in
 {
 
@@ -142,7 +145,11 @@ in
   home.file.".ssh/config".source = ./templates/ssh/config;
   #home.file.".config/neofetch/terminal-ascii.txt".source = ./templates/neofetch/terminal-ascii.txt;
   home.file.".config/neofetch/config.conf".source = ./templates/neofetch/config.conf;
-  home.file.".config/claude-deepseek-settings.json".source = ./templates/claude-deepseek-settings.json;
+  home.file.".config/claude-deepseek-settings.json".text = claudeSettings;
+  home.file.".claude/settings.json" = {
+    text = claudeSettings;
+    force = true;
+  };
 
   news.display = "silent";
 
