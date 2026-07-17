@@ -152,6 +152,23 @@ in
     force = true;
   };
 
+  # ── Claude Code agents ────────────────────────────────────────────
+  home.file.".claude/agents/java-springboot.md".source = ./templates/claude/agents/java-springboot.md;
+  home.file.".claude/agents/golang.md".source = ./templates/claude/agents/golang.md;
+  home.file.".claude/agents/ansible.md".source = ./templates/claude/agents/ansible.md;
+  home.file.".claude/agents/kubernetes.md".source = ./templates/claude/agents/kubernetes.md;
+  home.file.".claude/agents/linux-admin.md".source = ./templates/claude/agents/linux-admin.md;
+  home.file.".claude/agents/docker-optimization.md".source = ./templates/claude/agents/docker-optimization.md;
+
+  # ── Claude Code skills ────────────────────────────────────────────
+  home.file.".claude/skills/java-springboot.md".source = ./templates/claude/skills/java-springboot.md;
+  home.file.".claude/skills/golang.md".source = ./templates/claude/skills/golang.md;
+  home.file.".claude/skills/ansible.md".source = ./templates/claude/skills/ansible.md;
+  home.file.".claude/skills/kubernetes.md".source = ./templates/claude/skills/kubernetes.md;
+  home.file.".claude/skills/linux-admin.md".source = ./templates/claude/skills/linux-admin.md;
+  home.file.".claude/skills/docker-optimization.md".source = ./templates/claude/skills/docker-optimization.md;
+  home.file.".claude/skills/commit-push.md".source = ./.claude/skills/commit-push.md;
+
   news.display = "silent";
 
   xdg.enable=true;
