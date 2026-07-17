@@ -1,5 +1,27 @@
 ---
 description: Lint and optimize Dockerfiles using dockerfile-roast (droast), then apply manual hardening improvements. Covers Dockerfiles and docker-compose files.
+tools: Read, Write, Edit, Bash, Glob, Grep
+triggers:
+  - "optimize (my |the |this |our )?dockerfile"
+  - "optimize (my |the |this |our )?docker file"
+  - "optimize (my |the |this |our )?docker-compose"
+  - "optimize (my |the |this |our )?compose file"
+  - "dockerfile (optimiz|improv|review|lint|harden|audit|check|fix|clean)"
+  - "docker-compose (optimiz|improv|review|lint|harden|audit|check|fix|clean)"
+  - "(optimiz|improv|review|lint|harden|audit|check|fix|clean) (my |the |this |our )?dockerfile"
+  - "(optimiz|improv|review|lint|harden|audit|check|fix|clean) (my |the |this |our )?docker-compose"
+  - "(optimiz|improv|review|lint|harden|audit|check|fix) (my |the |this |our )?docker (image|container|build)"
+  - "docker (image|container) (optimiz|improv|size|security|hardening)"
+  - "droast"
+  - "dockerfile(-| )?roast"
+  - "multi-stage (build|docker)"
+  - "docker layer (cach|optimiz)"
+  - "reduce docker image size"
+  - "docker best practice"
+  - "containerize"
+  - "dockerize"
+  - "scan (my |the |this )?docker"
+  - "docker (security|vulnerability) (scan|check|audit)"
 ---
 
 # Docker Optimization Skill
