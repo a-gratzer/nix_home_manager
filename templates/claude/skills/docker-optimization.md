@@ -161,25 +161,101 @@ For docker-compose files, check:
 - [ ] Ports only exposed where necessary
 - [ ] `docker compose config` passes without errors
 
-## Step 5: Final Verification
+## Step 5: Before vs. After — Capture Baseline, Then Compare
 
+**IMPORTANT**: You must capture the baseline BEFORE making changes, then build again AFTER to produce concrete metrics.
+
+### 5a. Capture baseline (before any changes)
 ```bash
-# Validate compose file
-docker compose config --quiet
+# Record original image size (if image exists)
+ORIGINAL_IMAGE="<existing-image:tag>"
+docker image inspect "$ORIGINAL_IMAGE" 2>/dev/null | jq '.[0].Size' | numfmt --to=iec || echo "no existing image"
 
-# Build and check image size
-docker build -t test-image .
-docker image inspect test-image | jq '.[0].Size' | numfmt --to=iec
+# Or build the original Dockerfile and measure
+docker build -t app:before -f Dockerfile .
+BEFORE_SIZE=$(docker image inspect app:before | jq '.[0].Size')
+BEFORE_LAYERS=$(docker history app:before | tail -n +2 | wc -l)
+echo "BEFORE: size=$(echo $BEFORE_SIZE | numfmt --to=iec) layers=$BEFORE_LAYERS"
 
-# Security scan
-docker scout quickview test-image 2>/dev/null || echo "docker scout not available"
+# Count original RUN/COPY/ADD instructions
+BEFORE_INSTRUCTIONS=$(grep -cE '^(RUN|COPY|ADD) ' Dockerfile)
+echo "BEFORE: instructions=$BEFORE_INSTRUCTIONS"
 ```
 
-## Summary
+### 5b. Apply all optimizations from Steps 1–4
+Make each fix, document what was changed, then apply the next.
 
-After running this skill, present:
-1. **droast findings** — what was flagged and how it was fixed
-2. **Layer optimization** — before/after layer count
-3. **Security improvements** — non-root user, HEALTHCHECK, pinned versions
-4. **Size reduction** — estimated savings from multi-stage/slim base
-5. **Any remaining recommendations** — things that need human judgment (e.g., custom base image tradeoffs)
+### 5c. Build optimized image and compare
+```bash
+# Build optimized image
+docker build -t app:after -f Dockerfile .
+AFTER_SIZE=$(docker image inspect app:after | jq '.[0].Size')
+AFTER_LAYERS=$(docker history app:after | tail -n +2 | wc -l)
+echo "AFTER: size=$(echo $AFTER_SIZE | numfmt --to=iec) layers=$AFTER_LAYERS"
+
+# Count optimized instructions
+AFTER_INSTRUCTIONS=$(grep -cE '^(RUN|COPY|ADD) ' Dockerfile)
+echo "AFTER: instructions=$AFTER_INSTRUCTIONS"
+
+# Calculate savings
+SAVED_BYTES=$((BEFORE_SIZE - AFTER_SIZE))
+SAVED_PCT=$(echo "scale=1; ($BEFORE_SIZE - $AFTER_SIZE) * 100 / $BEFORE_SIZE" | bc)
+echo "SAVED: $(echo $SAVED_BYTES | numfmt --to=iec) ($SAVED_PCT%)"
+
+# Validate compose (if applicable)
+docker compose config --quiet 2>/dev/null && echo "compose: valid" || true
+```
+
+### 5d. Security scan (if available)
+```bash
+docker scout quickview app:after 2>/dev/null || echo "docker scout not available"
+# Fallback: check for common issues
+docker run --rm app:after whoami 2>/dev/null && echo "WARNING: may be running as root" || true
+```
+
+---
+
+## Final Report Template
+
+After completing all steps, present this structured summary:
+
+```
+## 📊 Docker Optimization Report
+
+### Size
+| Metric       | Before     | After      | Change      |
+|-------------|-----------|------------|-------------|
+| Image size  | xxx MB    | xxx MB     | **-xx%**    |
+| Layers      | xx        | xx         | -x          |
+
+### Droast Issues Fixed
+| # | Issue | Fix Applied |
+|---|-------|-------------|
+| 1 | `<droast finding>` | `<what was changed>` |
+| 2 | ... | ... |
+
+### Security Improvements
+- [x] Non-root user added (`USER 1000:1000`)
+- [x] Base image pinned to digest
+- [x] HEALTHCHECK added
+- [x] apt cache cleaned in same layer (`--no-install-recommends` + `rm -rf /var/lib/apt/lists/*`)
+- [x] `.dockerignore` created/updated
+
+### Build Optimizations
+- [x] Multi-stage build (if converted)
+- [x] Layer ordering optimized (deps before source)
+- [x] BuildKit cache mounts added (if applicable)
+- [x] Binary stripped (`-ldflags="-s -w"` for Go, `--no-install-recommends` for apt)
+
+### docker-compose Improvements (if applicable)
+- [x] Removed deprecated `version:` key
+- [x] Added `restart: unless-stopped`
+- [x] Added resource limits
+- [x] Added healthchecks for stateful services
+- [x] Named volumes for persistent data
+
+### Recommendations (human judgment needed)
+- `<any remaining issues that need user decision>`
+```
+
+**Always include concrete before/after numbers. Never present a report without measured size savings and layer count reduction.**

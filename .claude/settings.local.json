@@ -13,7 +13,9 @@
       "Bash(nix search *)",
       "Bash(bash ./scripts/hm_switch.sh 2>&1)",
       "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(k\\) for k in sorted\\(d.keys\\(\\)\\)]\")",
-      "Bash(nix build *)"
+      "Bash(nix build *)",
+      "Bash(docker *)",
+      "Bash(docker compose *)"
     ]
   }
 }
