@@ -15,7 +15,9 @@
       "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(k\\) for k in sorted\\(d.keys\\(\\)\\)]\")",
       "Bash(nix build *)",
       "Bash(docker *)",
-      "Bash(docker compose *)"
+      "Bash(docker compose *)",
+      "Bash(curl *)",
+      "Bash(python3 -c \"import sys,json,base64; d=json.load\\(sys.stdin\\); [print\\(base64.b64decode\\(f['content']\\).decode\\(\\)\\) for f in d if f['name']=='SKILL.md']\")"
     ]
   }
 }
