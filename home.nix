@@ -167,6 +167,9 @@ in
   home.file.".claude/skills/kubernetes.md".source = ./templates/claude/skills/kubernetes.md;
   home.file.".claude/skills/linux-admin.md".source = ./templates/claude/skills/linux-admin.md;
   home.file.".claude/skills/docker-optimization.md".source = ./templates/claude/skills/docker-optimization.md;
+  home.file.".claude/skills/commit-message.md".source = ./templates/claude/skills/commit-message.md;
+  home.file.".claude/skills/planning_feature.md".source = ./templates/claude/skills/planning_feature.md;
+  home.file.".claude/skills/analyse_feature.md".source = ./templates/claude/skills/analyse_feature.md;
   home.file.".claude/skills/commit-push.md".source = ./.claude/skills/commit-push.md;
 
   news.display = "silent";
