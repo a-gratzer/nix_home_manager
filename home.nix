@@ -170,7 +170,10 @@ in
   home.file.".claude/skills/commit-message.md".source = ./templates/claude/skills/commit-message.md;
   home.file.".claude/skills/planning_feature.md".source = ./templates/claude/skills/planning_feature.md;
   home.file.".claude/skills/analyse_feature.md".source = ./templates/claude/skills/analyse_feature.md;
-  home.file.".claude/skills/commit-push.md".source = ./.claude/skills/commit-push.md;
+
+  # ── Global Claude.mc ────────────────────────────────────────────
+  home.file.".claude/CLAUDE.md".source = ./templates/claude/CLAUDE.md;
+
 
   news.display = "silent";
 

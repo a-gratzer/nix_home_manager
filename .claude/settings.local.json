@@ -17,7 +17,9 @@
       "Bash(docker *)",
       "Bash(docker compose *)",
       "Bash(curl *)",
-      "Bash(python3 -c \"import sys,json,base64; d=json.load\\(sys.stdin\\); [print\\(base64.b64decode\\(f['content']\\).decode\\(\\)\\) for f in d if f['name']=='SKILL.md']\")"
+      "Bash(python3 -c \"import sys,json,base64; d=json.load\\(sys.stdin\\); [print\\(base64.b64decode\\(f['content']\\).decode\\(\\)\\) for f in d if f['name']=='SKILL.md']\")",
+      "Bash(python3 -c ' *)",
+      "Bash(home-manager switch *)"
     ]
   }
 }
