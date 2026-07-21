@@ -6,6 +6,36 @@ let
   deepseekApiKey = lib.removeSuffix "\n" (lib.last (lib.splitString "=" (lib.head (lib.splitString "\n" envFile))));
   claudeSettingsTemplate = builtins.readFile ./templates/claude-deepseek-settings.json;
   claudeSettings = builtins.replaceStrings [ "\"ANTHROPIC_API_KEY\": \"\"" ] [ "\"ANTHROPIC_API_KEY\": \"${deepseekApiKey}\"" ] claudeSettingsTemplate;
+
+  agentNames = [
+    "java-springboot" "golang" "ansible"
+    "kubernetes" "linux-admin" "docker-optimization"
+  ];
+
+  skillNames = [
+    "java-springboot" "golang" "ansible" "kubernetes"
+    "linux-admin" "docker-optimization" "commit-message"
+    "planning_feature" "analyse_feature"
+  ];
+
+  claudeAgents = builtins.listToAttrs (map (name: {
+    name = ".claude/agents/${name}.md";
+    value = { source = ./templates/claude/agents/${name}.md; };
+  }) agentNames);
+
+  claudeSkills = builtins.listToAttrs (builtins.concatMap (name: [
+    { name = ".claude/skills/${name}.md";          value = { source = ./templates/claude/skills/${name}.md; }; }
+    { name = ".claude/commands/skills/${name}.md"; value = { source = ./templates/claude/skills/${name}.md; }; }
+  ]) skillNames);
+
+  homeFiles = {
+    ".aliases".source = ./templates/.aliases;
+    ".ssh/config".source = ./templates/ssh/config;
+    ".config/neofetch/config.conf".source = ./templates/neofetch/config.conf;
+    ".config/claude-deepseek-settings.json".text = claudeSettings;
+    ".claude/settings.json" = { text = claudeSettings; force = true; };
+    ".claude/CLAUDE.md".source = ./templates/claude/CLAUDE.md;
+  } // claudeAgents // claudeSkills;
 in
 {
 
@@ -141,38 +171,8 @@ in
   };
 
 
-  #home.file.".smbcredentials".source = ./no_git/.smbcredentials;
-  home.file.".aliases".source = ./templates/.aliases;
-  home.file.".ssh/config".source = ./templates/ssh/config;
-  #home.file.".config/neofetch/terminal-ascii.txt".source = ./templates/neofetch/terminal-ascii.txt;
-  home.file.".config/neofetch/config.conf".source = ./templates/neofetch/config.conf;
-  home.file.".config/claude-deepseek-settings.json".text = claudeSettings;
-  home.file.".claude/settings.json" = {
-    text = claudeSettings;
-    force = true;
-  };
-
-  # ── Claude Code agents ────────────────────────────────────────────
-  home.file.".claude/agents/java-springboot.md".source = ./templates/claude/agents/java-springboot.md;
-  home.file.".claude/agents/golang.md".source = ./templates/claude/agents/golang.md;
-  home.file.".claude/agents/ansible.md".source = ./templates/claude/agents/ansible.md;
-  home.file.".claude/agents/kubernetes.md".source = ./templates/claude/agents/kubernetes.md;
-  home.file.".claude/agents/linux-admin.md".source = ./templates/claude/agents/linux-admin.md;
-  home.file.".claude/agents/docker-optimization.md".source = ./templates/claude/agents/docker-optimization.md;
-
-  # ── Claude Code skills ────────────────────────────────────────────
-  home.file.".claude/skills/java-springboot.md".source = ./templates/claude/skills/java-springboot.md;
-  home.file.".claude/skills/golang.md".source = ./templates/claude/skills/golang.md;
-  home.file.".claude/skills/ansible.md".source = ./templates/claude/skills/ansible.md;
-  home.file.".claude/skills/kubernetes.md".source = ./templates/claude/skills/kubernetes.md;
-  home.file.".claude/skills/linux-admin.md".source = ./templates/claude/skills/linux-admin.md;
-  home.file.".claude/skills/docker-optimization.md".source = ./templates/claude/skills/docker-optimization.md;
-  home.file.".claude/skills/commit-message.md".source = ./templates/claude/skills/commit-message.md;
-  home.file.".claude/skills/planning_feature.md".source = ./templates/claude/skills/planning_feature.md;
-  home.file.".claude/skills/analyse_feature.md".source = ./templates/claude/skills/analyse_feature.md;
-
-  # ── Global Claude.mc ────────────────────────────────────────────
-  home.file.".claude/CLAUDE.md".source = ./templates/claude/CLAUDE.md;
+  # ── Home files (agents, skills, commands, config) ────────────────
+  home.file = homeFiles;
 
 
   news.display = "silent";

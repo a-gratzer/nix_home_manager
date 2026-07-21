@@ -25,6 +25,13 @@
         "-y",
         "mcp-server-fetch-typescript"
       ]
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "chrome-devtools-mcp"
+      ]
     }
   }
 }
