@@ -168,6 +168,26 @@ Check each item for the planned feature:
 - [ ] **XSS**: If rendering user content, is it sanitized?
 - [ ] **CSRF**: If state-changing via browser, is CSRF token checked?
 
+## Execution Guidance
+
+Before implementing any step below, check for and prefer existing capabilities over writing new code from scratch:
+
+1. **Skills** — Check both:
+    - Project-local: `.claude/skills/` (or wherever this repo's skills live)
+    - Global: `~/.claude/skills/` or `~/.claude/commands/skills/`
+
+   If a skill matches a step's intent (e.g. docx/pptx/xlsx generation, PDF handling, deployment, testing conventions), read its `SKILL.md` and follow its instructions instead of improvising.
+
+2. **Subagents** — Check both:
+    - Project-local: `.claude/agents/`
+    - Global: `~/.claude/agents/`
+
+   If a subagent's description matches a step (e.g. a `code-reviewer`, `test-runner`, or `deploy` agent), delegate that step to it via the Task tool rather than doing it inline.
+
+3. **MCP servers** — Check configured MCP servers (project `.mcp.json` and global `~/.claude.json` / settings) for tools that cover a step (e.g. GitHub, Jira, database, browser automation). Use these tools directly instead of shelling out or reimplementing equivalent functionality.
+
+**Rule of thumb:** search for a matching skill → matching subagent → matching MCP tool → only then fall back to ad-hoc implementation. Do this check per step, not just once at the start, since later steps may need different tools than earlier ones.
+
 ## Step 7: Performance and Scaling Considerations
 
 | Concern | Plan | Threshold |
@@ -257,6 +277,26 @@ Brief description of the feature.
 
 ## Security Checklist
 - [ ] Item ...
+
+## Execution Guidance
+
+Before implementing any step below, check for and prefer existing capabilities over writing new code from scratch:
+
+1. **Skills** — Check both:
+    - Project-local: `.claude/skills/` (or wherever this repo's skills live)
+    - Global: `~/.claude/skills/` or `~/.claude/commands/skills/`
+
+   If a skill matches a step's intent (e.g. docx/pptx/xlsx generation, PDF handling, deployment, testing conventions), read its `SKILL.md` and follow its instructions instead of improvising.
+
+2. **Subagents** — Check both:
+    - Project-local: `.claude/agents/`
+    - Global: `~/.claude/agents/`
+
+   If a subagent's description matches a step (e.g. a `code-reviewer`, `test-runner`, or `deploy` agent), delegate that step to it via the Task tool rather than doing it inline.
+
+3. **MCP servers** — Check configured MCP servers (project `.mcp.json` and global `~/.claude.json` / settings) for tools that cover a step (e.g. GitHub, Jira, database, browser automation). Use these tools directly instead of shelling out or reimplementing equivalent functionality.
+
+**Rule of thumb:** search for a matching skill → matching subagent → matching MCP tool → only then fall back to ad-hoc implementation. Do this check per step, not just once at the start, since later steps may need different tools than earlier ones.
 
 ## Tasks
 
