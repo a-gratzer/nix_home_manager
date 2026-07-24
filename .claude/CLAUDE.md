@@ -79,3 +79,4 @@ All packages are declared in the `home.packages` list in `home.nix`. Add a packa
 ## Skills
 
 `/commit-push` — stages all changes, scans for secrets, proposes a commit message, and optionally pushes (defined in `.claude/skills/commit-push.md`).
+`/skill-creator` — guide for creating, modifying, improving, and measuring skill performance (defined in `.claude/skills/skill-creator.md`).
