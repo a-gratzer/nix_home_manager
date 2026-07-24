@@ -1,8 +1,20 @@
 ---
-description: Kubernetes workflows — resource authoring, Helm chart development, debugging, scaling, and cluster operations.
+name: kubernetes
+description: >-
+  Kubernetes resource authoring, debugging, scaling, and cluster operations —
+  including Helm charts, External Secrets Operator, and Velero backups. Use
+  this skill whenever the user is working with Kubernetes: creating Deployment
+  or Service manifests, debugging failing pods, scaling workloads, writing
+  Helm charts, troubleshooting network issues, managing secrets, setting up
+  backups, or performing any cluster operation. Also trigger on phrases like
+  "create a K8s deployment", "deploy to Kubernetes", "debug this pod", "write
+  a Helm chart", "fix CrashLoopBackOff", "scale my deployment", or any
+  Kubernetes-related infrastructure task.
 ---
 
 # Kubernetes Skills
+
+This skill covers Kubernetes operational patterns for production workloads. Each section is self-contained — use the one matching the current need. The patterns emphasize security-by-default (non-root containers, resource limits, readiness probes) and observability (health checks, structured logging, events-based debugging).
 
 ## Skill: Create a Deployment Manifest
 

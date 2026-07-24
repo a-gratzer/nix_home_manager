@@ -1,8 +1,21 @@
 ---
-description: Java & Spring Boot development workflows — project setup, REST APIs, JPA entities, testing, Docker builds, and dependency management.
+name: java-springboot
+description: >-
+  Java and Spring Boot development patterns — project scaffolding, JPA entities,
+  REST endpoints with DTOs, N+1 query fixes, Docker builds, and dependency
+  vulnerability scanning. Use this skill whenever the user is working on a
+  Spring Boot or Java project: creating entities, building REST APIs, fixing
+  JPA performance issues, writing Spring Boot tests, Dockerizing Spring Boot
+  apps, or checking for dependency vulnerabilities. Also trigger on phrases
+  like "create a Spring Boot project", "add a JPA entity", "build a REST
+  endpoint in Java", "fix N+1 queries", "scaffold a Spring service", or any
+  task where Spring Boot conventions (Controller → Service → Repository)
+  should be followed.
 ---
 
 # Java & Spring Boot Development Skills
+
+This skill covers patterns for Spring Boot production services. Each section is self-contained — use the one matching the current task. The patterns follow the layered architecture (Controller → Service → Repository) that Spring Boot encourages, with DTOs at API boundaries to decouple internal domain objects from external contracts.
 
 ## Skill: Create Spring Boot Project
 

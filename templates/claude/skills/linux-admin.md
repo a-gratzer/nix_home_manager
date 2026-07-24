@@ -1,8 +1,22 @@
 ---
-description: Linux server administration workflows — system diagnostics, service management, user administration, security hardening, storage, and backup.
+name: linux-admin
+description: >-
+  Linux server administration — system health checks, systemd service
+  management, user account setup, disk cleanup, firewall configuration
+  (UFW), SSL/TLS certificates via Let's Encrypt, PostgreSQL backups, SSH
+  hardening, and kernel tuning. Use this skill whenever the user needs to
+  administer a Linux server: diagnose system health, create systemd services,
+  manage users and permissions, clean up disk space, configure firewalls,
+  set up SSL certificates, back up databases, harden SSH, or tune kernel
+  parameters. Also trigger on phrases like "check server health", "set up
+  a service on Linux", "secure my server", "add a user with SSH access",
+  "free up disk space on the server", or any system administration task
+  on a Linux host.
 ---
 
 # Linux Administration Skills
+
+This skill covers common Linux server administration tasks. Each section is self-contained — use the one matching the current need. The patterns prioritize safety (dry-run where possible, backup before destructive operations) and follow the principle of least privilege (non-root service users, restricted systemd units, firewall defaults that deny inbound).
 
 ## Skill: System Health Check
 

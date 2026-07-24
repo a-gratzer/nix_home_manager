@@ -1,20 +1,15 @@
 ---
-description: Create conventional git commit messages from staged changes. Analyzes diffs, classifies commit type, supports optional gitmoji, and handles branching — with user approval at each step.
-tools: Read, Bash, Glob
-triggers:
-  - "create (a |the )?commit message"
-  - "generate (a |the )?commit message"
-  - "write (a |the )?commit message"
-  - "make (a |the )?commit"
-  - "commit (my |the |these |this )?changes?"
-  - "commit (with |using )?(git)?moji"
-  - "/commit-message"
-  - "suggest (a |the )?commit"
-  - "what should (I |we )?commit"
-  - "prepare (a |the )?commit"
-  - "draft (a |the )?commit"
-  - "stage and commit"
-  - "git commit"
+name: commit-message
+description: >-
+  Create conventional git commit messages from staged changes, with support
+  for gitmoji and automatic branch management. Use this skill whenever the
+  user wants to commit changes, generate a commit message, stage and commit,
+  create a conventional commit, or suggests they're ready to commit their
+  work. Triggers on any commit-related request: "commit my changes",
+  "generate a commit message", "make a commit", "draft a commit", "stage
+  and commit", "prepare a commit", "what should I commit", "/commit-message",
+  and even casual phrases like "let's commit this" or "I'm done, commit it".
+  Also use when the user mentions gitmoji or wants emoji in their commits.
 ---
 
 # Git Commit Message Skill

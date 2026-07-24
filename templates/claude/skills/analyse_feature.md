@@ -1,33 +1,20 @@
 ---
+name: analyse-feature
 description: >-
-  Analyze a named feature/module in a codebase — domain entities, services,
-  repositories, DTOs, data flow, dependencies, security surface, error handling,
-  logging, test coverage, and Mermaid diagrams. Writes output to
-  .claude/analyse/FEATURE_NAME/analysis.md. Best for Spring Boot/Java but
-  works for any stack.
+  Produce a comprehensive architecture analysis report for a feature, module,
+  or component of a codebase, written to .claude/analyse/<name>/analysis.md.
+  Covers domain entities, services, repositories, DTOs, data flow, dependencies,
+  security surface, error handling, logging, test coverage, and Mermaid
+  diagrams. Best for Spring Boot/Java but works for any stack.
 
-  Trigger on: analyze/analyse feature, feature analysis, analyze this
-  module/package, document how X works, document the architecture, map out
-  the module/flow, architecture overview/report, design overview, explain/
-  trace the data flow, how does data come in and go out, generate a class/
-  sequence/flow/dependency diagram, draw a mermaid diagram of, diagram this
-  feature/module, reverse engineer this feature, onboard me to this
-  codebase/module, give me an overview of this service/module. Also trigger
-  on implicit requests to inspect a feature's entities, services,
-  repositories, DTOs, or request/response flow, even without saying
-  "analyze".
-tools: Read, Bash, Glob, Grep
-triggers:
-  - "analyz?e (the |this |a |an |our )?(feature|module|component|endpoint|service|API|codebase|package)"
-  - "document (the |this |a |an |our )?(architecture|design|module|feature)"
-  - "(map out|diagram|reverse engineer) (the |this |a |an |our )?(feature|module|component)"
-  - "(explain|trace|walk through) (the |this |a |an |our )?(data |code |request )?(flow|path)"
-  - "how does .+ (work|fit)"
-  - "onboard me to (the |this |a |an |our )?(codebase|module|feature)"
-  - "(give|generate) (me )?(a |an )?(overview|diagram|report) of (the |this |a |an |our )?(service|module|feature)"
-  - "what does (the |this |a |an |our )?(feature|module|endpoint|service|code) do"
-  - "/analyse-feature"
-  - "/feature-analysis"
+  Use this skill whenever the user wants to understand how a feature or module
+  works internally, even if they don't use the word "analyze". This includes:
+  requests to document architecture or design, explain data flow, map out a
+  module, reverse-engineer a feature, onboard to a codebase, generate
+  diagrams (class/sequence/flow/dependency), or get an overview of any
+  service or component. Also trigger on vague questions like "how does X
+  work", "what does this service do", or "trace the request flow" — the
+  skill knows how to scope and structure the investigation.
 ---
 
 # Feature Analysis

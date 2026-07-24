@@ -1,8 +1,20 @@
 ---
-description: Go development workflows — module init, HTTP server setup, database integration, testing patterns, build optimization, and debugging.
+name: golang
+description: >-
+  Go development patterns and conventions — module initialization, HTTP server
+  setup with stdlib, database integration via sqlc, table-driven testing, race
+  condition detection, profiling, and optimized Docker builds. Use this skill
+  whenever the user is working with Go code: creating a new Go project,
+  adding HTTP endpoints, setting up database access, writing Go tests,
+  debugging race conditions, profiling Go performance, or building Go
+  Docker images. Also trigger on phrases like "create a Go service", "add
+  an API in Go", "set up a Go module", "write Go tests", "profile this Go
+  app", or any task where Go conventions and idioms matter.
 ---
 
 # Go Development Skills
+
+This skill covers Go development patterns optimized for production services. Each section is self-contained — use the one that matches the current task. The patterns emphasize stdlib-first (avoid unnecessary framework dependencies), clear project layout (cmd/internal/pkg), and production readiness (structured logging, health checks, graceful shutdown).
 
 ## Skill: Initialize a New Go Module
 

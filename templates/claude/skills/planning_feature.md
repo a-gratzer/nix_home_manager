@@ -1,26 +1,20 @@
 ---
+name: planning-feature
 description: >-
-  Create a structured, visual feature plan by breaking down a requested feature
-  into tasks, identifying parallel work, mapping edge cases, defining the
-  security surface, and optionally executing via sub-agents. Writes plan to
-  .claude/plans/plan_NAME/plan.md and an interactive HTML dependency graph to
-  .claude/plans/plan_NAME/plan.deps.html.
+  Create a structured, visual implementation plan for a feature or change —
+  breaking it into phased tasks, identifying parallel work, mapping edge cases
+  and security concerns, and optionally executing via sub-agents with
+  appropriate skills. Writes the plan to .claude/plans/plan_NAME/plan.md plus
+  an interactive HTML dependency graph to .claude/plans/plan_NAME/plan.deps.html.
 
-  Trigger on: plan a new feature, create a plan for, how should I implement,
-  break down this feature, plan the implementation of, feature plan for,
-  design a new feature, scope this feature, create an implementation plan,
-  write a spec for, draft a technical design.
-tools: Read, Bash, Glob, Grep
-triggers:
-  - "plan (a |the |this |an |our )?(new )?(feature|module|component|endpoint|service|API|integration|migration|refactor)"
-  - "design (a |the |this |an |our )?(new )?(feature|module|component|endpoint|service|API)"
-  - "scope (a |the |this |an |our )?(new )?(feature|module|component|endpoint)"
-  - "break down (a |the |this |an |our )?(new )?(feature|task|story|epic)"
-  - "create (a |the |an )?(implementation plan|plan|spec|specification|design doc|RFC)"
-  - "how should (I |we )?(build|implement|add|create) .+"
-  - "(write|create|draft) (a |the |an )?(spec|specification|RFC|design doc|technical design)"
-  - "/plan-feature"
-  - "/feature-plan"
+  Use this skill whenever the user wants to plan, design, scope, or spec out
+  a new feature, module, component, endpoint, service, API, integration,
+  migration, or refactor. Trigger on phrases like "plan this feature",
+  "design a new module", "break down this task", "how should I implement X",
+  "create a spec for", "scope this change", "write a design doc", "draft an
+  RFC", "/plan-feature", or any request to think through implementation
+  before coding. Also trigger when the user asks "how should I build X"
+  with enough complexity that a structured plan would help.
 ---
 
 # Plan Feature
@@ -278,25 +272,7 @@ Brief description of the feature.
 ## Security Checklist
 - [ ] Item ...
 
-## Execution Guidance
-
-Before implementing any step below, check for and prefer existing capabilities over writing new code from scratch:
-
-1. **Skills** — Check both:
-    - Project-local: `.claude/skills/` (or wherever this repo's skills live)
-    - Global: `~/.claude/skills/` or `~/.claude/commands/skills/`
-
-   If a skill matches a step's intent (e.g. docx/pptx/xlsx generation, PDF handling, deployment, testing conventions), read its `SKILL.md` and follow its instructions instead of improvising.
-
-2. **Subagents** — Check both:
-    - Project-local: `.claude/agents/`
-    - Global: `~/.claude/agents/`
-
-   If a subagent's description matches a step (e.g. a `code-reviewer`, `test-runner`, or `deploy` agent), delegate that step to it via the Task tool rather than doing it inline.
-
-3. **MCP servers** — Check configured MCP servers (project `.mcp.json` and global `~/.claude.json` / settings) for tools that cover a step (e.g. GitHub, Jira, database, browser automation). Use these tools directly instead of shelling out or reimplementing equivalent functionality.
-
-**Rule of thumb:** search for a matching skill → matching subagent → matching MCP tool → only then fall back to ad-hoc implementation. Do this check per step, not just once at the start, since later steps may need different tools than earlier ones.
+> **Execution Guidance**: Before implementing any task, follow the capability-precedence rule defined at the end of Step 6 (search for matching skill → matching subagent → matching MCP tool before falling back to ad-hoc implementation). Do this per-task, not just once at the start.
 
 ## Tasks
 
@@ -346,79 +322,24 @@ The HTML file must:
 
 **Template for the HTML file:**
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plan: <Feature Name> — Dependency Graph</title>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
-    <style>
-        body { background: #f8fafc; font-family: system-ui, sans-serif; padding: 2rem; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        h1 { color: #1e293b; font-size: 1.5rem; margin-bottom: 0.5rem; }
-        .subtitle { color: #64748b; margin-bottom: 2rem; }
-        .info { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 0.5rem; padding: 1rem; margin-bottom: 2rem; }
-        .info h2 { font-size: 1rem; color: #1e40af; margin: 0 0 0.5rem; }
-        .info ul { margin: 0; padding-left: 1.25rem; color: #1e293b; }
-        .info li { margin-bottom: 0.25rem; }
-        .legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2rem; padding: 1rem; background: white; border-radius: 0.5rem; border: 1px solid #e2e8f0; }
-        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: #475569; }
-        .legend-swatch { width: 1rem; height: 1rem; border-radius: 0.25rem; }
-        #graph { background: white; padding: 1.5rem; border-radius: 0.5rem; border: 1px solid #e2e8f0; overflow-x: auto; }
-        .footer { margin-top: 2rem; font-size: 0.75rem; color: #94a3b8; text-align: center; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>🧩 <Feature Name></h1>
-        <p class="subtitle">Task dependency graph — <created date></p>
+The page loads Mermaid from CDN (`https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js`), applies phase-colored classDefs (blue/green/purple), renders a `graph TB` with task nodes and dependency arrows inside `<pre class="mermaid">`, and includes a legend and parallel-group info panel. The Mermaid content embeds directly:
 
-        <div class="info">
-            <h2>📋 Parallel Execution Groups</h2>
-            <ul>
-                <li><strong>Group 1</strong> (Foundation, sequential): Task 1 → Task 2</li>
-                <li><strong>Group 2</strong> (Can run in parallel): Task 3, Task 4, Task 5</li>
-                <li><strong>Group 3</strong> (Depends on Group 2): Task 6 → Task 7</li>
-            </ul>
-        </div>
-
-        <div class="legend">
-            <div class="legend-item"><span class="legend-swatch" style="background:#3B82F6;"></span> Foundation</div>
-            <div class="legend-item"><span class="legend-swatch" style="background:#10B981;"></span> Core Implementation</div>
-            <div class="legend-item"><span class="legend-swatch" style="background:#8B5CF6;"></span> Integration & Polish</div>
-        </div>
-
-        <div id="graph">
-            <pre class="mermaid">
-                graph TB
-                    %% Styles
-                    classDef foundation fill:#3B82F6,color:#fff,stroke:#2563EB,stroke-width:2px
-                    classDef core fill:#10B981,color:#fff,stroke:#059669,stroke-width:2px
-                    classDef integration fill:#8B5CF6,color:#fff,stroke:#7C3AED,stroke-width:2px
-
-                    %% Tasks
-                    T1[Task 1: Title]:::foundation
-                    T2[Task 2: Title]:::core
-                    T3[Task 3: Title]:::core
-                    T4[Task 4: Title]:::integration
-
-                    %% Dependencies
-                    T1 --> T2
-                    T1 --> T3
-                    T2 --> T4
-                    T3 --> T4
-            </pre>
-        </div>
-
-        <div class="footer">
-            Generated by Claude Code on <date>
-        </div>
-    </div>
-</body>
-</html>
+```mermaid
+graph TB
+    classDef foundation fill:#3B82F6,color:#fff,stroke:#2563EB,stroke-width:2px
+    classDef core fill:#10B981,color:#fff,stroke:#059669,stroke-width:2px
+    classDef integration fill:#8B5CF6,color:#fff,stroke:#7C3AED,stroke-width:2px
+    T1[Task 1: Title]:::foundation
+    T2[Task 2: Title]:::core
+    T3[Task 3: Title]:::core
+    T4[Task 4: Title]:::integration
+    T1 --> T2
+    T1 --> T3
+    T2 --> T4
+    T3 --> T4
 ```
+
+Wrap this graph inside a self-contained HTML page with a legend and parallel-group info. Use `subgraph` blocks to visually group parallel tasks.
 
 ## Step 13: Prepare the execution manifest
 
@@ -503,72 +424,29 @@ Example subagent prompt structure:
 ```
 ## Task: T3A — POST /api/v1/webhooks endpoint
 
-### Skill: golang (Go HTTP endpoint patterns)
-
+### Skill: golang
 ### Codebase Context
-- Controllers live in `internal/handler/`, follow pattern: `func (h *XHandler) Create(w http.ResponseWriter, r *http.Request)`
-- Services are in `internal/service/`, constructor pattern: `func NewXService(deps) *XService`
-- Repositories are in `internal/repository/`, use sqlc-generated queries
-- Error handling: return `internal/errors` typed errors, global middleware maps to HTTP status
-- Validation: use `internal/validator` package with struct tags
+(patterns discovered in Step 2 — handler/service/repo conventions, error handling style, import paths)
 
 ### What to Implement
-Create `internal/handler/webhook.go` with Create handler that:
-- Accepts POST to /api/v1/webhooks
-- Validates request body against CreateWebhookRequest schema
-- Calls WebhookService.Create(ctx, input)
-- Returns 201 with CreateWebhookResponse
+Create handler that validates request, calls service, returns 201 with response DTO.
 
 ### Dependencies
-- T1 (DB migration) and T2 (WebhookRepository) must be complete before this runs
-- Import path: `github.com/org/repo/internal/repository` for the repo
+Requires T1 (DB migration) and T2 (repository). Import path: github.com/org/repo/internal/repository
 
 ### Acceptance Criteria
-- File compiles without errors
-- All existing tests still pass
-- New handler follows the same pattern as existing handlers (see internal/handler/user.go)
+Compiles, existing tests pass, follows pattern of existing handlers (see internal/handler/user.go)
 ```
 
 ### Phase Execution Flow
 
-```
-Phase 1: Foundation
-│
-├── [subagent-1] T1: DB migration          ← no skill needed, direct task
-│   └── ✅ Complete → commit via commit-message
-│
-├── [subagent-2] T2: Repository layer       ← golang skill
-│   └── ✅ Complete → commit
-│
-├── Phase 1 gate: all tasks done
-│
-Phase 2: Core Implementation (parallel group)
-│
-├── [subagent-3] T3A: POST endpoint         ← golang skill ─┐
-├── [subagent-4] T3B: GET endpoint          ← golang skill  ├─ dispatched simultaneously
-├── [subagent-5] T4: Service logic          ← golang skill ─┘
-│
-├── All subagents complete → orchestrator reviews combined output
-│   ├── Check for import conflicts between subagent-3, -4, -5
-│   ├── Verify all new files reference each other correctly
-│   ├── Run `go build ./...` to catch integration issues
-│   └── ✅ Integration clean → commit via commit-message
-│
-Phase 3: Polish (parallel group)
-│
-├── [subagent-6] T5: Integration tests      ← golang skill ─┐
-├── [subagent-7] T6: E2E tests              ← general       ├─ dispatched simultaneously
-├── [subagent-8] T7: Docker setup           ← docker-opt.   │
-├── [subagent-9] T8: Docs                   ← general       ─┘
-│
-├── All subagents complete → final integration review
-│   ├── Run full test suite
-│   ├── Verify Docker build succeeds
-│   └── ✅ All green → final commit via commit-message
-│
-▼
-Feature complete → create PR description
-```
+| Phase | Tasks | Dispatch | Integration Gate |
+|-------|-------|----------|------------------|
+| 1: Foundation | Sequentially: T1 → T2 | One at a time (T2 depends on T1) | All pass → proceed |
+| 2: Core | T3A, T3B, T4 | Simultaneously (parallel group) | Review combined output for import conflicts, run `go build` |
+| 3: Polish | T5, T6, T7, T8 | Simultaneously (parallel group) | Full test suite, Docker build check → final commit |
+
+After each phase gate passes: create a conventional commit via the `commit-message` skill.
 
 ### Subagent Failure Handling
 

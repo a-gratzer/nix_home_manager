@@ -1,8 +1,20 @@
 ---
-description: Ansible automation workflows — playbook authoring, role creation, inventory management, vault encryption, and troubleshooting.
+name: ansible
+description: >-
+  Ansible automation for infrastructure as code — playbook authoring,
+  role creation, inventory management, vault encryption, and
+  troubleshooting. Use this skill whenever the user mentions Ansible,
+  playbooks, roles, ansible-vault, Molecule testing, infrastructure
+  automation, server provisioning, configuration management, or
+  needs to debug a failing Ansible run. Also trigger on phrases
+  like "automate this server setup", "provision with Ansible",
+  "encrypt secrets for deployment", or when the user is working
+  with YAML-based infrastructure tasks that follow Ansible patterns.
 ---
 
 # Ansible Skills
+
+This skill provides reusable patterns for common Ansible tasks. Each section is self-contained — use the one that matches the user's current need. The patterns follow idempotency best practices (every task should be safe to run multiple times) and the principle of least surprise (explicit tags, clear naming, and handlers for service restarts).
 
 ## Skill: Create a New Role
 
