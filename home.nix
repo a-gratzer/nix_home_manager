@@ -10,12 +10,13 @@ let
   agentNames = [
     "java-springboot" "golang" "ansible"
     "kubernetes" "linux-admin" "docker-optimization"
+    "playwright-e2e"
   ];
 
   skillNames = [
     "java-springboot" "golang" "ansible" "kubernetes"
     "linux-admin" "docker-optimization" "commit-message"
-    "planning_feature" "analyse_feature"
+    "planning_feature" "analyse_feature" "playwright-e2e"
   ];
 
   claudeAgents = builtins.listToAttrs (map (name: {
@@ -160,6 +161,7 @@ in
       k6
       nodejs_22
 
+      herdr
 
   ] ;
 

@@ -16,6 +16,7 @@ The following skills are available as slash commands across all projects:
 | `/kubernetes` | Kubernetes workflows — resource authoring, Helm chart development, debugging, scaling, and cluster operations. |
 | `/linux-admin` | Linux server administration workflows — system diagnostics, service management, user administration, security hardening, storage, and backup. |
 | `/planning_feature` | Create a structured, visual feature plan by breaking down a requested feature into tasks, identifying parallel work, mapping edge cases, defining the security surface, and optionally executing via sub-agents. |
+| `/playwright-e2e` | End-to-end browser testing via Playwright MCP — automate web interactions, validate page content, capture screenshots/snapshots, monitor network/console, and generate structured test reports. |
 
 ## Available Sub-Agents
 
@@ -29,6 +30,7 @@ The following specialized sub-agents are available for task delegation:
 | **Java SpringBoot** | Backend services, REST APIs, microservices, JPA/Hibernate, testing, and build tooling. |
 | **Kubernetes** | Manifests, Helm charts, operators, cluster administration, troubleshooting, and cloud-native patterns. |
 | **Linux Admin** | System configuration, troubleshooting, security hardening, performance tuning, and shell scripting. |
+| **Playwright E2E** | Browser automation and end-to-end testing — test web apps, validate user flows, capture evidence, and generate structured report.md files consumable by other agents. |
 
 ## Usage Guidelines
 
