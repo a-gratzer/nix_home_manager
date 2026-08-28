@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   programs.broot = {
@@ -20,6 +20,9 @@
 
   programs.zsh = {
     enable = true;
+    # Lock the legacy location (~/.zshrc). Remove this line to adopt the new
+    # XDG default (~/.config/zsh) once `home.stateVersion` is bumped to 26.05+.
+    dotDir = config.home.homeDirectory;
     defaultKeymap = "viins";
     enableCompletion = true;
 
@@ -42,7 +45,7 @@
     # ── Options ──
     autocd = true;                   # type directory name to cd into it
 
-    initExtra = ''
+    initContent = ''
       # Powerline
       USE_POWERLINE="true"
 

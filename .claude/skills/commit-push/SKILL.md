@@ -1,4 +1,5 @@
 ---
+name: commit-push
 description: Stage all changes, create a short commit message summarizing changes, and push after confirmation
 ---
 

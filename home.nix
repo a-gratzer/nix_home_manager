@@ -11,6 +11,8 @@ let
     "java-springboot" "golang" "ansible"
     "kubernetes" "linux-admin" "docker-optimization"
     "playwright-e2e"
+    "security-adversary" "correctness-adversary"
+    "framework-adversary" "tests-adversary"
   ];
 
   skillNames = [
@@ -19,15 +21,23 @@ let
     "planning_feature" "analyse_feature" "playwright-e2e"
   ];
 
+  commandNames = [
+    "review-board"
+  ];
+
   claudeAgents = builtins.listToAttrs (map (name: {
     name = ".claude/agents/${name}.md";
     value = { source = ./templates/claude/agents/${name}.md; };
   }) agentNames);
 
   claudeSkills = builtins.listToAttrs (builtins.concatMap (name: [
-    { name = ".claude/skills/${name}.md";          value = { source = ./templates/claude/skills/${name}.md; }; }
-    { name = ".claude/commands/skills/${name}.md"; value = { source = ./templates/claude/skills/${name}.md; }; }
+    { name = ".claude/skills/${name}/SKILL.md";    value = { source = ./templates/claude/skills/${name}/SKILL.md; }; }
   ]) skillNames);
+
+  claudeCommands = builtins.listToAttrs (map (name: {
+    name = ".claude/commands/${name}.md";
+    value = { source = ./templates/claude/commands/${name}.md; };
+  }) commandNames);
 
   homeFiles = {
     ".aliases".source = ./templates/.aliases;
@@ -36,7 +46,7 @@ let
     ".config/claude-deepseek-settings.json".text = claudeSettings;
     ".claude/settings.json" = { text = claudeSettings; force = true; };
     ".claude/CLAUDE.md".source = ./templates/claude/CLAUDE.md;
-  } // claudeAgents // claudeSkills;
+  } // claudeAgents // claudeSkills // claudeCommands;
 in
 {
 
@@ -165,7 +175,7 @@ in
 
   ] ;
 
-  programs = (pkgs.callPackage ./apps/zsh.nix {}).programs // {
+  programs = (pkgs.callPackage ./apps/zsh.nix { inherit config; }).programs // {
     home-manager = { enable = true; };
     git = (pkgs.callPackage ./apps/git.nix {}).programs.git;
     neovim = (pkgs.callPackage ./apps/neovim/defaults.nix {}).programs.neovim;
